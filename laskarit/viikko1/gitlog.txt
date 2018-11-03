@@ -1,0 +1,107 @@
+$ git log --stat|cat
+commit f4c18744856d6ca5219d6f22f0c9622296bca70f
+Author: skuuu <saanakuu.u@gmail.com>
+Date:   Fri Nov 2 19:18:45 2018 +0200
+
+    "uudelleenimentä"
+
+ tiedostoja/file2.txt                 | 0
+ tiedostoja/{file1.txt => file22.txt} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit ae6bcf244265bfaba9d8ca14539c435d39de973e
+Author: skuuu <saanakuu.u@gmail.com>
+Date:   Fri Nov 2 19:12:54 2018 +0200
+
+    tiedostot luotu
+
+ tiedostoja/file1.txt | 0
+ tiedostoja/file2.txt | 0
+ tiedostoja/file3.txt | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit e4129b2688a005961c4bf09f66c3ab10b6b284b5
+Author: skuuu <saanakuu.u@gmail.com>
+Date:   Fri Nov 2 19:06:10 2018 +0200
+
+    muutoksia tiedostoon, git add -p
+
+ eka.txt    | 2 +-
+ kolmas.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 8d2d77db6bcbe34d6173c8e7c2807f3fd3d741e6
+Author: skuuu <saanakuu.u@gmail.com>
+Date:   Fri Nov 2 19:03:53 2018 +0200
+
+    uudelleennimentä
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 111532a6fe621ce59caaf9c9a4c8f206dee57bd2
+Author: skuuu <saanakuu.u@gmail.com>
+Date:   Fri Nov 2 19:02:45 2018 +0200
+
+    poistetaan toinen
+
+ toinen.txt | 2 --
+ 1 file changed, 2 deletions(-)
+
+commit 6bfc14ef93c2e8eafff4c622f6986b7b2773958d
+Author: skuuu <saanakuu.u@gmail.com>
+Date:   Fri Nov 2 18:57:30 2018 +0200
+
+    vähemmän tekstiä
+
+ tiedosto.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 606a10f8c5c64e8a669f94d3238f3ff1504907b2
+Author: skuuu <saanakuu.u@gmail.com>
+Date:   Fri Nov 2 18:56:19 2018 +0200
+
+    paljon tekstiä
+
+ kolmas.txt   | 2 ++
+ tiedosto.txt | 4 +++-
+ toinen.txt   | 2 ++
+ 3 files changed, 7 insertions(+), 1 deletion(-)
+
+commit ae338914423365d67cd4e5902fe6da0bdc74cf82
+Author: skuuu <saanakuu.u@gmail.com>
+Date:   Fri Nov 2 18:47:34 2018 +0200
+
+    kaikkija kansio
+
+ stuff/stuffitiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit b884843d957e97f14c3815222c966db228dcb8c4
+Author: skuuu <saanakuu.u@gmail.com>
+Date:   Fri Nov 2 18:45:12 2018 +0200
+
+    kolmas
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 30c00345f1830e1b122ed3030423b78259fb9d8e
+Author: skuuu <saanakuu.u@gmail.com>
+Date:   Fri Nov 2 18:41:27 2018 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 7cdb7e127c3a08119bddfb0278796a3f6e40dff2
+Author: skuuu <saanakuu.u@gmail.com>
+Date:   Fri Nov 2 18:37:42 2018 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
