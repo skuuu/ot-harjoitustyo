@@ -35,7 +35,7 @@ public class MaksukorttiTest {
     }
     @Test
     public void negatiivisenSummanLataaminenEiMuutaSaldoa (){
-         kortti = new Maksukortti(3);
+        kortti = new Maksukortti(3);
         kortti.lataaRahaa(-1);
         String vastaus = kortti.toString();
         assertEquals("Kortilla on rahaa 3.0 euroa", vastaus);

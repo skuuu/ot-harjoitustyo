@@ -22,7 +22,7 @@ public class Maksukortti {
             return false;
         }
  
-        this.saldo = this.saldo - maara;
+        this.saldo = this.saldo- maara;
         return true;
     }
 
