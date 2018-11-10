@@ -7,8 +7,14 @@
  [komentorivi.txt](https://github.com/skuuu/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
  <br/>
  <br/>
- <br/>
 
+## Viikko 2  
+ [screenshot](https://github.com/skuuu/ot-harjoitustyo/blob/master/laskarit/viikko2/Screenshot%20viikko2.jpg)  
+ [Maksukortti](https://github.com/skuuu/ot-harjoitustyo/tree/master/laskarit/viikko2/Maksukortti)  
+ [Unicafe](https://github.com/skuuu/ot-harjoitustyo/tree/master/laskarit/viikko2/Unicafe)  
+ <br/>
+ <br/>
+ <br/>
 *Tässä muutama lammas laskettavaksi:*  
 :sheep: :sheep: :sheep: :sheep: :sheep: :sheep: :sheep: :sheep: 
 :sheep:
