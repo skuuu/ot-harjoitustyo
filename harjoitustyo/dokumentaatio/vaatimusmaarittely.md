@@ -14,6 +14,7 @@ Kirjautumisnäkymässä käyttäjä kirjautuu sisään tai luo uuden käyttäjä
 Päänäkymässä käyttäjä näkee kuukauden ajalta menonsa. Käyttäjä voi pyytää raporttia haluamaltaan aikaväliltä tai lisätä menon. 
 Settings-näkymässä käyttäjä voi mm. muokata päiväkohtaista budjettiaan. 
 
+
 ## Perusversion tarjoama toiminnallisuus  
 ### Ennen kirjautumista  
 - käyttäjä voi luoda järjestelmään käyttäjätunnuksen
