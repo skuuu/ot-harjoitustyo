@@ -3,8 +3,7 @@
 ## Sovelluksen tarkoitus  
 
 Sovellus on budjetoija, jonka avulla voi luoda ja tarkastella budjettia.  
-Käyttäjä luo kategorioita menoille esim.  ruoka, harrastukset, laskut. 
-Käyttäjä lisää menonsa ja budjettinsa sovellukseen, ja sovellus laskee päiväkohtaiset menot sekä osuuden tavoitebudjetista sekä luo raportin kuukausittaisista menoista kategorioittain ja yhteensä. 
+Käyttäjä lisää menonsa ja budjettinsa sovellukseen, ja sovellus laskee päiväkohtaiset menot sekä osuuden tavoitebudjetista sekä luo raportin kuukausittaisista menoista.
  
 ## Käyttäjät  
 Sovelluksella voi olla monta käyttäjää.
@@ -12,9 +11,8 @@ Sovelluksella voi olla monta käyttäjää.
 ## Käyttöliittymäluonnos  
 Käyttöliittymä koostuu kolmesta eri näkymästä. 
 Kirjautumisnäkymässä käyttäjä kirjautuu sisään tai luo uuden käyttäjätunnuksen. 
-Budjettinäkymässä käyttäjä näkee kuukauden ajalta menonsa. Käyttäjä voi pyytää raporttia haluamaltaan aikaväliltä tai siirtyä lisäämään menon. 
-Lisäysnäkymässä käyttäjä valitsee päivän, jolle meno lisätään ja kategorian menolle.  
-*(tähän tulee vielä kuva kunhan kerkeän)*
+Päänäkymässä käyttäjä näkee kuukauden ajalta menonsa. Käyttäjä voi pyytää raporttia haluamaltaan aikaväliltä tai lisätä menon. 
+Settings-näkymässä käyttäjä voi mm. muokata päiväkohtaista budjettiaan. 
 
 ## Perusversion tarjoama toiminnallisuus  
 ### Ennen kirjautumista  
@@ -32,6 +30,6 @@ Lisäysnäkymässä käyttäjä valitsee päivän, jolle meno lisätään ja kat
 
 ## Jatkokehitysideoita  
 Perusversion jälkeen järjestelmää täydennetään ajan salliessa esim. seuraavilla toiminnallisuuksilla
--	Käyttäjätunnuksen poistaminen
+-	Käyttäjätunnuksen vaihtaminen/poistaminen
 -	Menon poistaminen
 - Raportin esitystavan muokkaaminen käyttäjän toiveiden mukaan
