@@ -9,9 +9,9 @@ Sovelluksen avulla käyttäjä voi tarkastella budjettiaan graafisena, lisätä 
 
 [Vaatimusmäärittely](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/dokumentaatio/vaatimusmaarittely.md)
 
-[Arkkitehtuurikuvaus]()
+[Arkkitehtuurikuvaus](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/dokumentaatio/arkkitehtuurikuvaus.md)
 
-[Testausdokumentti]()
+[Testausdokumentti](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/dokumentaatio/testaus.md)
 
 [Työaikakirjanpito](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/dokumentaatio/tuntikirjanpito.md)
 
