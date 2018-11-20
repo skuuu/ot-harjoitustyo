@@ -4,7 +4,7 @@
 | :----:|:-----| :-----|
 | 11.11. |  2   | aiheen rajaus, vaatimusmäärittely |
 | 18.11 |  3   | creating classes |
-| 19.11. | 5    | creating logic |
+| 19.11. | 7    | creating logic |
 |    20.11.   | 5    |creating tests, cleaning classes, writing documentation  |
 |       |     |  |
 |  |     |  |
@@ -13,4 +13,4 @@
 |   |     |  |
 |       |     |  |
 |   |     |  |
-| yht   | 2   | | 
+| yht   | 17   | | 
