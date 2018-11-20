@@ -9,15 +9,12 @@ import static org.junit.Assert.*;
 public class MaksukorttiTest {
     
     Maksukortti kortti;
-    
 
- 
-    
-    @Before
-    public void setUp() {
-       kortti = new Maksukortti(10);
-
-    }
+//    @Before
+//    public void setUp() {
+//       kortti = new Maksukortti(10);
+//
+//    }
     
 
     
@@ -30,6 +27,7 @@ public class MaksukorttiTest {
     public void syoMaukkaastiEiVieSaldoaNegatiiviseksi (){
         kortti = new Maksukortti(3);
         String vastaus = kortti.toString();
+        kortti.syoMaukkaasti();
         assertEquals("Kortilla on rahaa 3.0 euroa", vastaus);
         
     }
