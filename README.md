@@ -14,11 +14,9 @@
  [Unicafe](https://github.com/skuuu/ot-harjoitustyo/tree/master/laskarit/viikko2/Unicafe)  
  <br/>
  <br/>
- <br/>
- 
  
  ## Viikko 3  
- [SaastopossuApp](https://github.com/skuuu/ot-harjoitustyo/tree/master/harjoitustyo/Saastopossu)
+ [SaastopossuApp](https://github.com/skuuu/ot-harjoitustyo/tree/master/harjoitustyo)
  lisätty tämänhetkisenä versiona.
  <br/>
  <br/>
