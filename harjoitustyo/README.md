@@ -1,5 +1,8 @@
 # SaastopossuApp
 
+
+HUOM tällä hetkellä sovellusta voi käyttää ainoastaan käyttäjätunnuksella "saana"!
+
 Sovelluksen avulla käyttäjä voi tarkastella budjettiaan graafisena, lisätä menoja valitsemilleen päiville ja nähdä budjettiin liittyviä laskelmia. Sovellusta on mahdollista käyttää useamman rekisteröityneen käyttäjän, joilla kaikilla on oma budjetti.
 
 
@@ -17,7 +20,8 @@ Sovelluksen avulla käyttäjä voi tarkastella budjettiaan graafisena, lisätä 
 
 ## Releaset
 
-[Viikko 3](https://github.com/skuuu/ot-harjoitustyo/tree/master/harjoitustyo)
+[Viikko 3](https://github.com/skuuu/ot-harjoitustyo/tree/master/harjoitustyo)  
+käyttäjätunnus: saana
 
 ## Komentorivitoiminnot
 
