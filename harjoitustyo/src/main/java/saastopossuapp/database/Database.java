@@ -4,8 +4,8 @@ import java.sql.*;
 
 public class Database {
     private final String url = "jdbc:postgresql://localhost/users";
-    private final String user = "postgres";
-    private final String password = "postgres";
+    private final String user = "tester";
+    private final String password = "tester1";
 
     private String databaseAddress;
 

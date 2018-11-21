@@ -1,5 +1,5 @@
 
-package saastopossuapp.domain;
+package saastopossuapp.logic;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -16,10 +16,11 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.TextField;
 import saastopossuapp.UserInterface;
 import saastopossuapp.dao.ActivityDao;
 import saastopossuapp.dao.UserDao;
+import saastopossuapp.domain.Activity;
+import saastopossuapp.domain.UserAccount;
 
 
 public class Logic {
@@ -175,13 +176,13 @@ public class Logic {
             return "Check dates!";
         }
     }
-    public Boolean createUser(TextField signInField){
+    public Boolean createUser(String signInField){
         try {
-            String username = signInField.getText();
+            String username = signInField;
             UserAccount user = new UserAccount(username);
             user.setUserId(userDao.findAll().size()+1);
-            user.setUserBudget(1000);
             userDao.save(user);
+            System.out.println("saved");
         } catch (SQLException ex) {
             Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
             return false;

@@ -1,6 +1,6 @@
 
 package saastopossuapp;
-
+//TYÖPÖYTÄ
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.logging.Level;
@@ -97,8 +97,12 @@ public class UserInterface extends Application {
             primaryStage.setScene(createUserScene);
         });
         
+        //validointi puuttuu vielä:
         signInButton.setOnMouseClicked(event -> {
-            primaryStage.setScene(passwordScene);
+            if(logic.createUser(newUsernameField.getText())){
+               primaryStage.setScene(passwordScene);  
+            }
+            System.out.println("invalid username");
         });
         
         backToLoginButton.setOnMouseClicked(event -> {
