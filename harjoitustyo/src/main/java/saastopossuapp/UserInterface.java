@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import saastopossuapp.dao.ActivityDao;
 import saastopossuapp.dao.UserDao;
 import saastopossuapp.database.Database;
-import saastopossuapp.domain.Logic;
+import saastopossuapp.logic.Logic;
 
 
 public class UserInterface extends Application {

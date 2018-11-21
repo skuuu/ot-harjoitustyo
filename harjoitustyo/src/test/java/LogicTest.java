@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 import saastopossuapp.dao.ActivityDao;
 import saastopossuapp.dao.UserDao;
 import saastopossuapp.database.Database;
-import saastopossuapp.domain.Logic;
+import saastopossuapp.logic.Logic;
 import saastopossuapp.domain.UserAccount;
 
 public class LogicTest {
