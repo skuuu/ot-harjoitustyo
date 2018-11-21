@@ -12,9 +12,9 @@ Dao-luokat testataan tietokannassa.
 
 ### Testauskattavuus
 
-Sovelluksen tämänhetkinen testauksen rivikattavuus on 26% ja haarautumakattavuus 23%
+Sovelluksen tämänhetkinen testauksen rivikattavuus on 26% ja haarautumakattavuus 23%  
 
-<img src="" width="800">
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/jacoco20.11.2018nyt.jpg" width="800">
 
 
 ## Järjestelmätestaus

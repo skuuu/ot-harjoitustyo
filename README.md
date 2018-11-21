@@ -15,6 +15,15 @@
  <br/>
  <br/>
  <br/>
+ 
+ 
+ ## Viikko 3  
+ [SaastopossuApp](https://github.com/skuuu/ot-harjoitustyo/tree/master/harjoitustyo/Saastopossu)
+ lisätty tämänhetkisenä versiona.
+ <br/>
+ <br/>
+ <br/>
+ 
 *Tässä muutama lammas laskettavaksi:*  
 :sheep: :sheep: :sheep: :sheep: :sheep: :sheep: :sheep: :sheep: 
 :sheep:
