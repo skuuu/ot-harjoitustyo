@@ -17,7 +17,7 @@ Sovelluksen avulla käyttäjä voi tarkastella budjettiaan graafisena, lisätä 
 
 ## Releaset
 
-[Viikko 3](https://github.com/mluukkai/OtmTodoApp/releases/tag/viikko5)
+[Viikko 3](https://github.com/skuuu/ot-harjoitustyo/tree/master/harjoitustyo)
 
 ## Komentorivitoiminnot
 
