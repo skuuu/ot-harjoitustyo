@@ -7,3 +7,5 @@ target
 testdatabase.db
 
 mvn
+
+nbproject
