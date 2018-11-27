@@ -1,8 +1,8 @@
-# SaastopossuApp
+# :money_with_wings: SaastopossuApp  :money_with_wings:
 
 
 
-Sovelluksen avulla käyttäjä voi tarkastella budjettiaan graafisena, lisätä menoja valitsemilleen päiville ja nähdä budjettiin liittyviä laskelmia. Sovellusta on mahdollista käyttää useamman rekisteröityneen käyttäjän, joilla kaikilla on oma budjetti.
+Sovelluksen avulla käyttäjä voi tarkastella budjettiaan graafisena esityksenä haluamallaan aikavälillä, lisätä menoja valitsemilleen päiville, määritellä menoille kategorioita ja nähdä budjettiin liittyviä laskelmia. Sovellus vaatii kirjautumisen ja tallentaa tiedot käyttäjäkohtaisesti tietokantaan.
 
 
 ## Dokumentaatio
