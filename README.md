@@ -1,6 +1,7 @@
 # Ohjelmistotekniikka
 
-*Ohjelmistotekniikka* -kurssin harjoitustehtävät sekä harjoitustyö. 
+*Ohjelmistotekniikka* -kurssin harjoitustehtävät sekä harjoitustyö.  
+Harjoitustyö löytyy [harjoitustyo-kansiosta](https://github.com/skuuu/ot-harjoitustyo/tree/master/harjoitustyo).
 
 ## Viikko 1  
  [gitlog.txt](https://github.com/skuuu/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)  
