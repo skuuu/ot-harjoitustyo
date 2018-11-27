@@ -19,7 +19,7 @@ Sovelluksen avulla käyttäjä voi tarkastella budjettiaan graafisena, lisätä 
 
 ## Releaset
 
-[Viikko 3](https://github.com/skuuu/ot-harjoitustyo/tree/master/harjoitustyo)  
+[Viikko 4](https://github.com/skuuu/ot-harjoitustyo/releases/tag/saastopossuAppv.1.0)  
 
 ## Komentorivitoiminnot
 
