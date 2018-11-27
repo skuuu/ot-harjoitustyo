@@ -27,7 +27,7 @@ Toiminnallisista kokonaisuuksista vastaa luokka [Logic](). Luokka tarjoaa kaikil
 
 _Logic_ pääsee käsiksi käyttäjiin ja kuluihin tietojen tallennuksesta vastaavaan pakkauksessa _saastopossuapp.dao_ sijaitsevien rajapinnan _Dao_ toteuttavien luokkien _ActivityDao_ ja _UserDao_ kautta. 
 
-TodoServicen ja ohjelman muiden osien suhdetta kuvaava luokka/pakkauskaavio:  
+Ohjelman osien suhdetta kuvaava luokka/pakkauskaavio:  
 <img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/luokkaPakkauskaavio.jpeg" width="500">
 
 
