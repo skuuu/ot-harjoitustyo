@@ -4,6 +4,10 @@
 
 Sovelluksen avulla käyttäjä voi tarkastella budjettiaan graafisena esityksenä haluamallaan aikavälillä, lisätä menoja valitsemilleen päiville, määritellä menoille kategorioita ja nähdä budjettiin liittyviä laskelmia. Sovellus vaatii kirjautumisen ja tallentaa tiedot käyttäjäkohtaisesti tietokantaan.
 
+Tällä hetkellä kaipaisin apua seuraavissa asioissa: 
+- miten graafisesta käyttöliittymästä vastaavan UserInterface -luokan voisi toteuttaa siistimmin? 
+
+
 
 ## Dokumentaatio
 
