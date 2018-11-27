@@ -10,7 +10,7 @@ Lataa tiedosto [saastopossu.jar](https://github.com/skuuu/ot-harjoitustyo/releas
 Ohjelma käynnistetään komennolla 
 
 ```
-java -jar saastopossu.jar
+java -jar Saastopossu_release_27.11.2018.jar
 ```
 
 ## Kirjautuminen
