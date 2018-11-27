@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.*;
 import java.sql.*;
 import saastopossuapp.domain.*;
-import saastopossuapp.database.*;
 
-
-public class UserDao implements Dao <UserAccount, Integer, String> {
+public class UserDao implements Dao<UserAccount, Integer, String> {
     private Database db;
     
-    public UserDao (Database db){
+    public UserDao(Database db) {
         this.db = db;
     }
     @Override
@@ -42,9 +40,9 @@ public class UserDao implements Dao <UserAccount, Integer, String> {
         PreparedStatement stmt = con.prepareStatement("SELECT * FROM UserAccount");
         
         ResultSet rs = stmt.executeQuery();
-        List <UserAccount> users = new ArrayList<>();
+        List<UserAccount> users = new ArrayList<>();
 
-        while (rs.next()){
+        while (rs.next()) {
             UserAccount user = new UserAccount(rs.getString("username"));
             user.setUserBudget(rs.getInt("userBudget"));
             user.setUserId(rs.getInt("userId"));
@@ -68,7 +66,7 @@ public class UserDao implements Dao <UserAccount, Integer, String> {
         conn.close(); 
         
     }
-    public UserAccount save(UserAccount user)throws SQLException{
+    public UserAccount save(UserAccount user) throws SQLException {
         Connection conn = db.connect();
   
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO UserAccount"
@@ -77,15 +75,14 @@ public class UserDao implements Dao <UserAccount, Integer, String> {
         
         stmt.setString(1, user.getUsername().trim());
         stmt.setInt(2, user.getUserBudget());
-        stmt.setInt(3, findAll().size()+1);
+        stmt.setInt(3, findAll().size() + 1);
         
         stmt.executeUpdate();
         stmt.close();
         return user;
-        
     
     }
-    public int updateBudget(String username, int budget) throws SQLException{
+    public int updateBudget(String username, int budget) throws SQLException {
         Connection conn = db.connect();
   
         PreparedStatement stmt = conn.prepareStatement("UPDATE useraccount SET userbudget = (?) WHERE username = (?)");

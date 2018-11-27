@@ -33,9 +33,6 @@ public class UserAccount {
 
     public void setUserBudget(int budget) {
         this.userBudget = budget;
-        System.out.println("budjetti muutettu");
-    }
-    public String toString(){
-        return this.username + this.userId + this.userBudget;
+        
     }
 }

@@ -8,7 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import saastopossuapp.dao.UserDao;
-import saastopossuapp.database.Database;
+import saastopossuapp.dao.Database;
 import saastopossuapp.domain.UserAccount;
 
 
@@ -31,7 +31,7 @@ public class UserAccountDaoTest {
     
     @Before
     public void setUp() throws ClassNotFoundException, SQLException {
-        db = new Database("testdatabase.db");
+        db = new Database();
         ud = new UserDao(db);
         testUser = new UserAccount("tester");
         testUser.setUserId(ud.findAll().size()+1);
@@ -50,7 +50,6 @@ public class UserAccountDaoTest {
     @Test
     public void findOneworksWhenUsernameExists() throws SQLException {
         ud.save(testUser);
-        System.out.println(testUser.getUsername());
         assertEquals(testUser.getUsername(), ud.findOne("tester").getUsername());
     }
     @Test

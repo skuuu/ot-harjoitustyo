@@ -9,9 +9,20 @@ public class Activity {
     private String activitysUser; 
     private int cents; 
     private Date date;
-       
-    public Activity (int cents){
+    private String category;
+
+
+    public Activity(int cents) {
         this.cents = cents;
+        this.category = "no category";
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public int getActivityId() {
@@ -45,4 +56,5 @@ public class Activity {
     public void setDate(Date date) {
         this.date = date;
     }
+    
 }

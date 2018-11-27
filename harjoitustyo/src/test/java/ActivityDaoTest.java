@@ -1,72 +1,59 @@
 
 import java.sql.Date;
 import java.sql.SQLException;
-import javafx.scene.control.PasswordField;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import saastopossuapp.dao.ActivityDao;
 import saastopossuapp.dao.UserDao;
-import saastopossuapp.database.Database;
+import saastopossuapp.dao.Database;
 import saastopossuapp.domain.Activity;
 import saastopossuapp.domain.UserAccount;
 
 public class ActivityDaoTest {
-    private  static Database db;
-    private  static ActivityDao ad;
-    private  static Activity testActivity;
-    private  static UserAccount testUser;
-    private  static UserDao ud;
+    private Database db;
+    private ActivityDao ad;
+    private Activity testActivity;
+    private UserAccount testUser;
+    private UserDao ud;
     
-    public ActivityDaoTest() throws SQLException, ClassNotFoundException {
+   
+    @Before
+    public void setUp() throws SQLException, ClassNotFoundException {
+        this.db = new Database();
+        this.ad = new ActivityDao(db);
         
-    }
-    
-    @BeforeClass
-    public static void setUpClass() throws SQLException, ClassNotFoundException {
-        db = new Database("testdatabase.db");
-        ad = new ActivityDao(db);
-        
-        ud = new UserDao(db);
-        testUser = new UserAccount("tester");
+        this.ud = new UserDao(db);
+        this.testUser = new UserAccount("tester");
         testUser.setUserId(ud.findAll().size()+1);
         testUser.setUserBudget(100);
         ud.save(testUser);
         
-        testActivity = new Activity(10);
+        this.testActivity = new Activity(10);
         testActivity.setActivityId(ad.findAll().size()+1);
         testActivity.setActivitysUser("tester");
-        Date date = new Date(31-03-1992);
+        testActivity.setCategory("category");
+        Date date = java.sql.Date.valueOf("1992-03-31");
         testActivity.setDate(date);
-        
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws SQLException {
-        ad.delete("tester");
-        ud.delete("tester");
-    }
-    
-    @Before
-    public void setUp() throws ClassNotFoundException, SQLException {
         
     }
     @After
     public void tearDown() throws SQLException {
-        
+        ad.delete("tester");
+        ud.delete("tester");
     }
     
     @Test
     public void saveWorks() throws SQLException {
-        assertEquals(testActivity.getActivityId(), ad.save(testActivity).getActivityId());  
+        assertEquals(testActivity.getActivityId(), ad.saveOrUpdate(testActivity, "tester").getActivityId());  
     }
 
     @Test
     public void findOneworksWhenActivityIdExists() throws SQLException {
+        ad.saveOrUpdate(testActivity, "tester");
         assertEquals(testActivity.getActivityId(), ad.findOne(testActivity.getActivityId()).getActivityId());
+
     }
     @Test
     public void findOneworksWhenActivityIdDoesntExist() throws SQLException {
@@ -75,21 +62,45 @@ public class ActivityDaoTest {
     @Test
     public void findAllWorks() throws SQLException {
         int koko = ad.findAll().size();
-        ad.save(testActivity);
+        ad.saveOrUpdate(testActivity, "tester");
         assertEquals(koko+1, ad.findAll().size()); 
     }
     @Test
     public void findAllByUserWorks() throws SQLException {
         int koko = ad.findAllByUser("tester").size();
-        ad.save(testActivity);
+        ad.saveOrUpdate(testActivity, "tester");
         assertEquals(koko+1, ad.findAllByUser("tester").size()); 
     }
     @Test
     public void findAllByDateWorks() throws SQLException {
-        Date after = new Date(1992-30-31);
-        Date before = new Date(1992-01-04);
-        ad.save(testActivity);
+        Date after = java.sql.Date.valueOf("1992-03-31");
+        Date before = java.sql.Date.valueOf("1992-04-01");
+        ad.saveOrUpdate(testActivity, "tester");
         assertEquals(1, ad.findAllByDate(after, before, "tester").size()); 
     }
-    
+    @Test
+    public void findExpensesByDateWorksWhenDatesAreValid() throws SQLException {
+        ad.saveOrUpdate(testActivity, "tester");
+        int cents = ad.findExpensesByDate("31.03.1992", "tester");
+        assertEquals(10, cents); 
+    }
+    @Test //2018-11-25 -muotoon
+    public void convertStringToDateWorks() throws SQLException {
+        String str = "31.03.1992";
+        Date date = java.sql.Date.valueOf("1992-03-31");
+        assertEquals(date, ad.convertStringToDate(str)); 
+    }
+    @Test
+    public void addExpenseToSameDayDoesntAddNewExpense() throws SQLException {
+        int sizeBefore = ad.findAllByUser("tester").size();
+        ad.saveOrUpdate(testActivity, "tester");
+        ad.saveOrUpdate(testActivity, "tester");
+        assertEquals(sizeBefore+1, ad.findAllByUser("tester").size());
+    }
+    @Test
+    public void findAllByCategoryReturnsEmptyMapIfNoActivities() throws SQLException {
+        Date after = java.sql.Date.valueOf("1990-03-30");
+        Date before = java.sql.Date.valueOf("1990-03-31");
+        assertEquals(0, ad.findAllByCategory(after, before, "tester").size());
+    }
 }
