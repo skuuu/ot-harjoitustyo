@@ -1,23 +1,18 @@
 # Ohjelmistotekniikka
 
-*Ohjelmistotekniikka* -kurssin harjoitustehtävät. 
+*Ohjelmistotekniikka* -kurssin harjoitustehtävät sekä harjoitustyö. 
 
 ## Viikko 1  
  [gitlog.txt](https://github.com/skuuu/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)  
  [komentorivi.txt](https://github.com/skuuu/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
  <br/>
- <br/>
-
 ## Viikko 2  
  [screenshot](https://github.com/skuuu/ot-harjoitustyo/blob/master/laskarit/viikko2/Screenshot%20viikko2.jpg)  
  [Maksukortti](https://github.com/skuuu/ot-harjoitustyo/tree/master/laskarit/viikko2/Maksukortti)  
- [Unicafe](https://github.com/skuuu/ot-harjoitustyo/tree/master/laskarit/viikko2/Unicafe)  
+ [Unicafe](https://github.com/skuuu/ot-harjoitustyo/tree/master/laskarit/viikko2/Unicafe)
  <br/>
- <br/>
- 
- ## Viikko 3  
- [SaastopossuApp](https://github.com/skuuu/ot-harjoitustyo/tree/master/harjoitustyo)
- lisätty tämänhetkisenä versiona.
+ ## Viikko 3, 4  
+ SaastopossuApp lisätty tämänhetkisenä versiona [harjoitustyo](https://github.com/skuuu/ot-harjoitustyo/tree/master/harjoitustyo) -kansioon.
  <br/>
  <br/>
  <br/>
