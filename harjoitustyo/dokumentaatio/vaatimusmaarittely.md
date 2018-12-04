@@ -14,6 +14,7 @@ Kirjautumisnäkymässä (passwordScene) käyttäjä kirjautuu sisään tai siirt
 Päänäkymässä (startScene) käyttäjä näkee kuukauden ajalta menonsa. Käyttäjä voi pyytää raporttia haluamaltaan aikaväliltä tai lisätä menon. 
 Asetukset-näkymässä (SettingsScene) käyttäjä voi mm. muokata päiväkohtaista budjettiaan. 
 
+<img src= "https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/IMG_20181113_184739.jpg" width="800">
 
 ## Perusversion tarjoama toiminnallisuus  
 ### Ennen kirjautumista  
