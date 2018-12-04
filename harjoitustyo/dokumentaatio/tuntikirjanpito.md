@@ -12,5 +12,5 @@
 | 26.11.  |   7  | some serious coding. Separating logic and gui |
 | 27.11.  |  5   | tests, class structure diagram |
 |   28.11.    |  3   | database changed |
-|29.11|     |  3|code
+|29.11|    3 | code |
 | yht   | 44   | | 
