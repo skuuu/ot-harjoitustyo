@@ -41,6 +41,8 @@ Ohjelman osien suhdetta kuvaava luokka/pakkauskaavio:
 
 #### uuden käyttäjän luominen
 
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/IMG_20181204_235242.jpg" width="500">
+
 #### Activityn luominen
 
 #### Muut toiminnallisuudet
