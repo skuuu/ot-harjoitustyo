@@ -32,24 +32,44 @@ Ohjelman osien suhdetta kuvaava luokka/pakkauskaavio:
 
 
 ## Tietojen pysyväistallennus  
+Pakkauksen todoapp.dao luokat UserAccounDao ja ActivityDao huolehtivat tietojen tallettamisesta tiedostoihin.
 
-### Tiedostot
+Luokat noudattavat Data Access Object -suunnittelumallia. Luokat on eristetty rajapintojen UseracoounDaoInterface ja ActivityDaoInterface taakse ja sovelluslogiikka ei käytä luokkia suoraan. Luokat ovat Dao-tyyppinsä takia korvattavissa helposti. 
 
-### Päätoiminnallisuudet
 
-#### käyttäjän kirjautuminen
 
-#### uuden käyttäjän luominen
+### Tiedostot  
+
+Sovellus tallentaa tiedot sql-tietokantaan (users.db), jossa on kaksi tietokantataulua: UserAccount ja Activity. 
+
+### Päätoiminnallisuudet  
+
+Päätoiminnallisuudet kuvattu seuraavaksi sekvenssikaavioina. 
+
+#### käyttäjän kirjautuminen  
+Käyttäjä voi kirjautua aloitusnäkymässä painikkeesta _login_ jonka aktivaatio kutsuu logic-luokan metodia _checkUsername_ ja palauttaa true, jos käyttäjänimi löytyy tietokannasta ja muuten false. 
+
+#### uuden käyttäjän luominen  
+Uuden käyttäjän voi luoda _create new user account_ -painikkeesta, jolloin käyttöliittymä kutsuu logic-luokan metodia _createUser_ joka kutsuu UserAccountDao-luokan metodia _saveOrUpdate_ ja palauttaa true, jos tallennus onnistui ja muuten false. False-tapauksissa tulostuu virheviesti. 
 
 <img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/IMG_20181204_235242.jpg" width="500">
 
-#### Activityn luominen
+#### Activityn luominen  
+Activity luodaan valitsemalla päivä, syöttämällä summa ja aktivoimalla painike _add_, jolloin kutsutaan Logic-luokan metodia addExpense. Tästä metodista joko päivitetään tai tallennetaan ActivityDao-luokan saveOrUpdate-metodia käyttäen. 
 
-#### Muut toiminnallisuudet
 
-## Ohjelman rakenteeseen jääneet heikkoudet
 
-### käyttöliittymä
+#### Muut toiminnallisuudet  
+Sovelluksen toimintaperiaate on samankaltainen myös muille toiminnoille. Graafinen käyttöliittymä kutsuu logic-luokkaa, josta tarvittaessa kutsutaan edelleen Analysis-luokkaa. Logic-luokalla on pääsy UserAccountDao- ja ActivityDao -luokkiin, rajapintojen UserAccountDaoInterface ja ActivityDaoInterface kautta. 
 
-### DAO-luokat
+## Ohjelman rakenteeseen jääneet heikkoudet   
+Koodi ei ole vielä valmis...
+
+### käyttöliittymä  
+
+
+
+### DAO-luokat  
+
+
 
