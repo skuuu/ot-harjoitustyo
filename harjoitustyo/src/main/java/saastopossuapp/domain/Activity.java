@@ -4,7 +4,7 @@ package saastopossuapp.domain;
 import java.sql.Date;
 
 
-public class Activity {
+public class Activity implements Comparable<Activity> {
     private int activityId;
     private String activitysUser; 
     private int cents; 
@@ -12,9 +12,11 @@ public class Activity {
     private String category;
 
 
-    public Activity(int cents) {
+    public Activity(String activitysUser, int cents, Date date, String category) {
+        this.activitysUser = activitysUser;
         this.cents = cents;
-        this.category = "no category";
+        this.date = date;
+        this.category = category;
     }
 
     public String getCategory() {
@@ -55,6 +57,15 @@ public class Activity {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+
+    @Override
+    public int compareTo(Activity other) {
+        if (this.date.before(other.date)) {
+            return -1;
+        }
+        return 1;
     }
     
 }

@@ -1,15 +1,11 @@
 
 package saastopossuapp.gui;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -32,32 +28,35 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import saastopossuapp.dao.ActivityDao;
-import saastopossuapp.dao.UserDao;
+import saastopossuapp.dao.UserAccountDao;
 import saastopossuapp.dao.Database;
 import saastopossuapp.logic.Logic;
 
 
 public class UserInterface extends Application {
-    private Database db;
-    private UserDao userDao;
-    private ActivityDao activityDao;
     private Logic logic;
+    private String username; 
+    private DatePicker afterDatePicker;
+    private DatePicker beforeDatePicker;
 
     @Override
     public void init() throws ClassNotFoundException {
-        db = new Database();
-        userDao = new UserDao(db);
-        activityDao = new ActivityDao(db);
-        logic = new Logic(userDao, activityDao);
+        Database db = new Database();
+        UserAccountDao userAccountDao = new UserAccountDao(db);
+        ActivityDao activityDao = new ActivityDao(db);
+        this.afterDatePicker = new DatePicker(LocalDate.now().minusMonths(1));
+        this.beforeDatePicker = new DatePicker(LocalDate.now());
+        logic = new Logic(userAccountDao, activityDao);
+        
         
     }
     @Override
     public void start(Stage primaryStage) throws SQLException {
         //passwordScene
         Label loginInstructionLabel = new Label("Type username and press login");
+        PasswordField passwordField = new PasswordField();
         Button loginButton = new Button("Login");
         Label passwordErrorLabel = new Label("");
-        PasswordField passwordField = new PasswordField();
         Button createUserButton = new Button("Create new user account");
         Scene passwordScene = createPasswordScene(loginInstructionLabel, loginButton, passwordErrorLabel, passwordField, createUserButton);
         
@@ -75,8 +74,6 @@ public class UserInterface extends Application {
         Label inputErrorMessage = new Label (" ");
         Label dateLabel = new Label ("Date:  ");
         DatePicker transactionDatePicker = new DatePicker(LocalDate.now());
-        DatePicker beforeDatePicker = new DatePicker(LocalDate.now());
-        DatePicker afterDatePicker = new DatePicker(LocalDate.now().minusMonths(1));
         Label showLabel = new Label("Show expenses");
         Label fromLabel = new Label("From:  ");
         Label minusLabel = new Label("To:     ");
@@ -90,7 +87,7 @@ public class UserInterface extends Application {
         TextField newCategoryField = new TextField();
                 
         BorderPane startLayout = new BorderPane();            
-        Scene startScene = createStartScene(newCategoryField, chooseCategoryLabel, categoryChoice, passwordField, startLayout, transactionLabel, eurosFieldTransaction, centsFieldTransaction, inputErrorMessage, dateLabel, transactionDatePicker,
+        Scene startScene = createStartScene(newCategoryField, chooseCategoryLabel, categoryChoice, startLayout, transactionLabel, eurosFieldTransaction, centsFieldTransaction, inputErrorMessage, dateLabel, transactionDatePicker,
         beforeDatePicker, afterDatePicker, showLabel, fromLabel, minusLabel, expenseLabel, totalExpenses, transactionButton, settingsButton, logoutButton);        
 
         //Settings-Scene: 
@@ -107,12 +104,12 @@ public class UserInterface extends Application {
             primaryStage.setScene(newUserScene);
         });
         
-        //validointi puuttuu vielä:
+       
         signInButton.setOnMouseClicked(event -> {
-            if(logic.createUser(newUsernameField.getText())){
+            if(logic.createUser(newUsernameField.getText().trim())){
                primaryStage.setScene(passwordScene);  
             }
-            System.out.println("invalid username");
+            //validointivirheviesti puuttuu vielä:
         });
         
         backToLoginButton.setOnMouseClicked(event -> {
@@ -120,8 +117,8 @@ public class UserInterface extends Application {
         });
             
         setBudgetButton.setOnAction((setPressed) -> {
-            if (logic.changeBudget(eurosFieldBudget.getText(), centsFieldBudget.getText(), passwordField.getText())){
-                refreshScreen(newCategoryField, categoryChoice, afterDatePicker,  beforeDatePicker,  expenseLabel,  passwordField,  totalExpenses,  startLayout,  centsFieldTransaction,  eurosFieldTransaction,  inputErrorMessage);
+            if (logic.changeBudget(eurosFieldBudget.getText(), centsFieldBudget.getText())){
+                refreshScreen(newCategoryField, categoryChoice, afterDatePicker,  beforeDatePicker,  expenseLabel,  totalExpenses,  startLayout,  centsFieldTransaction,  eurosFieldTransaction,  inputErrorMessage);
                 primaryStage.setScene(startScene);
                 budgetErrorMessage.setText("  ");
             }else{
@@ -131,17 +128,17 @@ public class UserInterface extends Application {
         });
 
         afterDatePicker.setOnAction((afterdaychosen) -> {
-            refreshScreen(newCategoryField, categoryChoice, afterDatePicker,  beforeDatePicker,  expenseLabel,  passwordField,  totalExpenses,  startLayout,  centsFieldTransaction,  eurosFieldTransaction,  inputErrorMessage);
+            refreshScreen(newCategoryField, categoryChoice, afterDatePicker,  beforeDatePicker,  expenseLabel,  totalExpenses,  startLayout,  centsFieldTransaction,  eurosFieldTransaction,  inputErrorMessage);
             
         });
 
         beforeDatePicker.setOnAction((beforedaychosen) -> {
-            refreshScreen(newCategoryField, categoryChoice, afterDatePicker,  beforeDatePicker,  expenseLabel,  passwordField,  totalExpenses,  startLayout,  centsFieldTransaction,  eurosFieldTransaction,  inputErrorMessage);
+            refreshScreen(newCategoryField, categoryChoice, afterDatePicker,  beforeDatePicker,  expenseLabel,  totalExpenses,  startLayout,  centsFieldTransaction,  eurosFieldTransaction,  inputErrorMessage);
         });
 
         transactionButton.setOnAction((beforedaychosen) -> {
-            if (notNull(categoryChoice.getValue()) && logic.addExpense(newCategoryField.getText(), categoryChoice.getValue().toString(), eurosFieldTransaction.getText(), centsFieldTransaction.getText(), logic.convertToDate(transactionDatePicker.getValue()), passwordField.getText())){
-                refreshScreen(newCategoryField, categoryChoice, afterDatePicker,  beforeDatePicker,  expenseLabel,  passwordField,  totalExpenses,  startLayout,  centsFieldTransaction,  eurosFieldTransaction,  inputErrorMessage);
+            if (notNull(categoryChoice.getValue()) && logic.addExpense(newCategoryField.getText(), categoryChoice.getValue().toString(), eurosFieldTransaction.getText(), centsFieldTransaction.getText(), logic.localDateToDate(transactionDatePicker.getValue()))){
+                refreshScreen(newCategoryField, categoryChoice, afterDatePicker,  beforeDatePicker,  expenseLabel,  totalExpenses,  startLayout,  centsFieldTransaction,  eurosFieldTransaction,  inputErrorMessage);
             }else{
                 inputErrorMessage.setTextFill(Color.RED);
                 inputErrorMessage.setText("Invalid input");
@@ -162,12 +159,13 @@ public class UserInterface extends Application {
         });
         
         loginButton.setOnAction((event) -> {
+            this.username = passwordField.getText().trim();
             try {
                 if (logic.checkUsername(passwordField.getText())==false) {
                     passwordErrorLabel.setTextFill(Color.RED);
                     passwordErrorLabel.setText("Invalid username");
                 }else{
-                    refreshScreen(newCategoryField, categoryChoice, afterDatePicker,  beforeDatePicker,  expenseLabel,  passwordField,  totalExpenses,  startLayout,  centsFieldTransaction,  eurosFieldTransaction,  inputErrorMessage);
+                    refreshScreen(newCategoryField, categoryChoice, afterDatePicker,  beforeDatePicker,  expenseLabel,  totalExpenses,  startLayout,  centsFieldTransaction,  eurosFieldTransaction,  inputErrorMessage);
                     primaryStage.setScene(startScene);
                 }
             }catch (SQLException ex) {
@@ -194,18 +192,19 @@ public class UserInterface extends Application {
         launch(UserInterface.class);
         
     }
-    private void refreshScreen(TextField newCategoryField, ComboBox categoryChoice, DatePicker afterDatePicker, DatePicker beforeDatePicker, Label expenseLabel, PasswordField passwordField, Label totalExpenses, BorderPane startLayout, TextField centsFieldTransaction, TextField eurosFieldTransaction, Label inputErrorMessage){
+    private void refreshScreen(TextField newCategoryField, ComboBox categoryChoice, DatePicker afterDatePicker, DatePicker beforeDatePicker, Label expenseLabel, Label totalExpenses, BorderPane startLayout, TextField centsFieldTransaction, TextField eurosFieldTransaction, Label inputErrorMessage){
         BarChart <String, Number> barChart = null;
         try {
-            barChart = createBarChart(afterDatePicker.getValue(), beforeDatePicker.getValue(), expenseLabel.getText(), passwordField.getText());
-            listenBars (barChart, expenseLabel, passwordField);
+            barChart = createBarChart(afterDatePicker.getValue(), beforeDatePicker.getValue());
+            listenBars (barChart, expenseLabel);
             startLayout.setCenter(barChart);
-            categoryChoice.setItems(logic.createChoices(afterDatePicker.getValue(), beforeDatePicker.getValue(), passwordField.getText()));
+            categoryChoice.setItems(logic.createChoices(afterDatePicker.getValue(), beforeDatePicker.getValue()));
 
         } catch (SQLException ex) {
             Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
-        totalExpenses.setText(logic.getBudgetAnalysis(afterDatePicker.getValue(), beforeDatePicker.getValue(), passwordField.getText()));
+        
+        totalExpenses.setText(logic.getBudgetAnalysis(afterDatePicker.getValue(), beforeDatePicker.getValue()));
         centsFieldTransaction.clear();
         eurosFieldTransaction.clear();
         newCategoryField.clear();
@@ -214,18 +213,14 @@ public class UserInterface extends Application {
         inputErrorMessage.setText(" ");
     
     }
-    private void listenBars(BarChart <String, Number> barChart, Label expenseLabel, PasswordField password){
+    private void listenBars(BarChart <String, Number> barChart, Label expenseLabel){
         Tooltip t = new Tooltip("tyhja");
         Tooltip.install(barChart, t);
-        for (XYChart.Series<String, Number> serie: barChart.getData()){
+        for (XYChart.Series<String, Number> serie: barChart.getData()) {
             for (XYChart.Data<String, Number> item: serie.getData()){
                 item.getNode().setOnMouseEntered((MouseEvent entered) -> {
-                    t.setText(""+item.getYValue()+ " €");
-                    try {
-                        expenseLabel.setText("Total expenses on " + item.getXValue() + ": " + logic.toEuros(activityDao.findExpensesByDate(item.getXValue(), password.getText()))+ " €");
-                    } catch (SQLException ex) {
-                        Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    t.setText("" + item.getYValue() + " €");
+                    expenseLabel.setText(logic.getExpenseLabelText(item.getXValue()));
                 });
                 item.getNode().setOnMouseExited((MouseEvent exited) -> {
                     expenseLabel.setText(" ");
@@ -264,7 +259,7 @@ public class UserInterface extends Application {
         return new Scene(newUserLayout);
         
     }
-    public Scene createStartScene(TextField newCategoryField, Label chooseCategoryLabel, ComboBox categoryChoice, PasswordField passwordField, BorderPane startLayout, Label transactionLabel, TextField eurosFieldTransaction, TextField centsFieldTransaction, Label inputErrorMessage, Label dateLabel, DatePicker transactionDatePicker,
+    public Scene createStartScene(TextField newCategoryField, Label chooseCategoryLabel, ComboBox categoryChoice, BorderPane startLayout, Label transactionLabel, TextField eurosFieldTransaction, TextField centsFieldTransaction, Label inputErrorMessage, Label dateLabel, DatePicker transactionDatePicker,
         DatePicker beforeDatePicker, DatePicker afterDatePicker, Label showLabel, Label fromLabel, Label minusLabel, Label expenseLabel, Label totalExpenses, Button transactionButton, Button settingsButton, Button logoutButton) throws SQLException{
         startLayout.setPrefSize(1000, 480);
         startLayout.setPadding(new Insets(20, 20, 20, 20));
@@ -287,7 +282,7 @@ public class UserInterface extends Application {
         pane1.setPadding(new Insets(20, 20, 20, 20));
         pane1.add(transactionLabel, 0, 0);
         pane1.add(eurosFieldTransaction, 0, 1);
-        pane1.add(centsFieldTransaction, 0, 2); //col, row
+        pane1.add(centsFieldTransaction, 0, 2);
         HBox dateRowLayout = new HBox();
         dateRowLayout.setAlignment(Pos.CENTER);
         dateRowLayout.getChildren().add(dateLabel);
@@ -336,11 +331,11 @@ public class UserInterface extends Application {
         rightLayout.getChildren().add(pane2);
         rightLayout.getChildren().add(pane3);
         startLayout.setRight(rightLayout);
-        BarChart b = createBarChart(afterDatePicker.getValue(), beforeDatePicker.getValue(), expenseLabel.getText(), passwordField.getText());
+        BarChart b = createBarChart(afterDatePicker.getValue(), beforeDatePicker.getValue());
         startLayout.setCenter(b);
         
-        eurosFieldTransaction.setPromptText("euros");
-        centsFieldTransaction.setPromptText("cents");
+        eurosFieldTransaction.setPromptText("00");
+        centsFieldTransaction.setPromptText("00");
         return new Scene(startLayout);
         
     }
@@ -366,10 +361,9 @@ public class UserInterface extends Application {
         return new Scene (settingsLayout);
         
     }
-    public BarChart <String, Number> createBarChart(LocalDate afterDatePicker, LocalDate beforeDatePicker, String expenseLabel, String passwordField) throws SQLException{
-        Date after = logic.convertToDate(afterDatePicker);
-        Date before = logic.convertToDate(beforeDatePicker);
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    public BarChart <String, Number> createBarChart(LocalDate afterDatePicker, LocalDate beforeDatePicker) throws SQLException{
+        String after = logic.localDateToString(afterDatePicker);
+        String before = logic.localDateToString(beforeDatePicker);
 
         CategoryAxis xAkseli = new CategoryAxis();
         NumberAxis yAkseli = new NumberAxis();
@@ -377,12 +371,8 @@ public class UserInterface extends Application {
         yAkseli.setLabel("€");
         BarChart<String, Number> pylvaskaavio = new BarChart<>(xAkseli, yAkseli);
         pylvaskaavio.setLegendVisible(true);
-        pylvaskaavio.setTitle("Daily Expenses from " + dateFormat.format(after) + "-"+ dateFormat.format(before));
-                
-        ArrayList<XYChart.Series> seriesList= logic.createSerie(afterDatePicker, beforeDatePicker, passwordField);
-        ObservableList<String> arranged = logic.arrangeXAxis(seriesList, afterDatePicker, beforeDatePicker, passwordField);
-        ((CategoryAxis)pylvaskaavio.getXAxis()).setCategories(arranged);
-
+        pylvaskaavio.setTitle("Daily Expenses from " + after + "-"+ before);
+        ArrayList<XYChart.Series> seriesList= logic.createSerie(afterDatePicker, beforeDatePicker);
         seriesList.forEach((s) -> {
             pylvaskaavio.getData().add(s);
         });

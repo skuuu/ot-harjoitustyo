@@ -6,24 +6,23 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import saastopossuapp.domain.Activity;
 
 
-public class ActivityDao implements Dao<Activity, Integer, Integer> {
+public class ActivityDao implements ActivityDaoInterface {
     private Database db;
     
     public ActivityDao(Database db) {
         this.db = db;
+        
     }
 
-    @Override
     public Activity findOne(Integer key) throws SQLException {
-        Connection con = db.connect();
+        Connection con = db.getConnection();
         PreparedStatement stmt = con.prepareStatement("SELECT * FROM Activity WHERE ActivityId=?");
         stmt.setInt(1, key);
         ResultSet rs = stmt.executeQuery();
@@ -33,9 +32,7 @@ public class ActivityDao implements Dao<Activity, Integer, Integer> {
             return null;
         }
 
-        Activity activity = new Activity(rs.getInt("cents"));
-        activity.setDate(rs.getDate("date"));
-        activity.setActivitysUser(rs.getString("activitysUser"));
+        Activity activity = new Activity(rs.getString("activitysUser").trim(), rs.getInt("cents"), rs.getDate("date"), rs.getString("category").trim());
         activity.setActivityId(rs.getInt("activityId"));
 
         stmt.close();
@@ -43,99 +40,35 @@ public class ActivityDao implements Dao<Activity, Integer, Integer> {
         con.close();
         return activity;
     }
+    
     @Override
     public List<Activity> findAll() throws SQLException {
-        Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("SELECT * FROM Activity");
+        Connection con = db.getConnection();
+        PreparedStatement stmt = con.prepareStatement("SELECT activitysuser, cents, date, category, activityid FROM Activity");
         
         ResultSet rs = stmt.executeQuery();
         List<Activity> activities = new ArrayList<>();
-
-        while (rs.next()) {
-            Activity activity = new Activity(rs.getInt("cents"));
-            activity.setActivityId(rs.getInt("activityId"));
-            activity.setDate(rs.getDate("date"));
-            activity.setActivitysUser(rs.getString("activitysUser"));
-            activity.setCategory("no category");
-            activities.add(activity);
-        }
+        
+        if (!rs.next()) {
+            return activities; 
+        } else {
+            do {
+                Activity activity = new Activity(rs.getString("activitysuser").trim(), rs.getInt("cents"), rs.getDate("date"), rs.getString("category").trim());
+                activity.setActivityId(rs.getInt("activityid"));
+                activities.add(activity);
+            }
+            while (rs.next());
+        } 
         stmt.close();
         rs.close();
         con.close();
         return activities;
-        
-    }
-    public ArrayList<Activity> findAllByUser(String username) throws SQLException {
-        Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("SELECT * FROM Activity WHERE activitysuser = (?)");
-        stmt.setString(1, username);
-        
-        ResultSet rs = stmt.executeQuery();
-        ArrayList<Activity> activities = new ArrayList<>();
-
-        while (rs.next()) {
-            Activity activity = new Activity(rs.getInt("cents"));
-            activity.setActivityId(rs.getInt("activityId"));
-            activity.setDate(rs.getDate("date"));
-            activity.setActivitysUser(rs.getString("activitysuser"));
-            activity.setCategory(rs.getString("category"));
-            activities.add(activity);
-        }
-        stmt.close();
-        rs.close();
-        con.close();
-        return activities;
-        
-        
-    }
-    public HashMap<Date, Integer> findAllByDate(Date after, Date before, String passwordField) throws SQLException {
-        Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("SELECT date AS date, SUM(cents) AS cents FROM activity WHERE date >= (?) AND date <= (?) AND activitysuser = (?) GROUP BY date");
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String strDate1 = dateFormat.format(after);
-        String strDate2 = dateFormat.format(before);
-        
-        stmt.setDate(1, after);
-        stmt.setDate(2, before);
-        stmt.setString(3, passwordField);
-        
-        ResultSet rs = stmt.executeQuery();
-        HashMap<Date, Integer> map = new HashMap<>();
-        while (rs.next()) {
-            map.put(rs.getDate("date"), rs.getInt("cents"));
-        }
-        stmt.close();
-        rs.close();
-        con.close();
-
-        return map;
-        
-    }
-    public Integer findExpensesByDate(String date, String passwordField) throws SQLException {
-        Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("SELECT SUM(cents) AS cents FROM activity WHERE date = (?) AND activitysuser = (?)");
-        
-        stmt.setDate(1, convertStringToDate(date));
-        System.out.println("muunnettu päivä: " + convertStringToDate(date));
-        stmt.setString(2, passwordField);
-        
-        ResultSet rs = stmt.executeQuery();
-        int cents = 0; 
-        while (rs.next()) {
-            cents += rs.getInt("cents");
-        }
-        stmt.close();
-        rs.close();
-        con.close();
-        System.out.println("cents: " + cents);
-        return cents;
         
     }
     @Override
     public void delete(String username) throws SQLException {
-        Connection conn = db.connect();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Activity"
-                + " WHERE activitysuser = (?)");
+        Connection conn = db.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Activity WHERE activitysuser = (?)");
 
         stmt.setString(1, username);
         stmt.executeUpdate();
@@ -143,48 +76,114 @@ public class ActivityDao implements Dao<Activity, Integer, Integer> {
         conn.close(); 
 
     }
-    public Activity saveOrUpdate(Activity lisattava, String password) throws SQLException {
-        Connection conn = db.connect();
-        List<Activity> all = findAllByUser(password);
+    @Override
+    public Activity saveOrUpdate(Activity lisattava, String username) throws SQLException {
+        List<Activity> all = findAllByUser(username);
         for (int i = 0; i < all.size(); i++) {
             if (all.get(i).getDate().equals(lisattava.getDate()) && all.get(i).getCategory().trim().equals(lisattava.getCategory().trim())) {
                 return update(lisattava, all.get(i));
             }
         }
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Activity"
-            + " (activityId, activitysUser, cents, date, category)"
-            + " VALUES (?,?,?,?,?)");
+        return save(lisattava);
+    }
+    
+    public Activity save(Activity lisattava) throws SQLException {
+        int id = (findAll().size() + 1);
+        Connection conn = db.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Activity (activityid, activitysuser, cents, date, category) VALUES (?,?,?,?,?)");
 
-        stmt.setInt(1, findAll().size() + 1);
+        stmt.setInt(1, id);
         stmt.setString(2, lisattava.getActivitysUser());
         stmt.setInt(3, lisattava.getCents());
         stmt.setDate(4, lisattava.getDate()); 
         stmt.setString(5, lisattava.getCategory());
         stmt.executeUpdate();
         stmt.close();
+        conn.close();
         return lisattava;
+    }
+
+    @Override
+    public ArrayList<Activity> findAllByUser(String username) throws SQLException {
+        Connection con = db.getConnection();
+        PreparedStatement stmt = con.prepareStatement("SELECT * FROM Activity WHERE activitysuser = (?)");
+        stmt.setString(1, username);
+        
+        ResultSet rs = stmt.executeQuery();
+        ArrayList<Activity> activities = new ArrayList<>();
+
+        while (rs.next()) {
+            Activity activity = new Activity(rs.getString("activitysUser").trim(), rs.getInt("cents"), rs.getDate("date"), rs.getString("category").trim());
+            activity.setActivityId(rs.getInt("activityId"));
+            activities.add(activity);
+        }
+        stmt.close();
+        rs.close();
+        con.close();
+        return activities;
+        
         
     }
-    public Activity update(Activity a, Activity korvattava) throws SQLException {
-        Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("UPDATE Activity SET"
-                + " cents = ? WHERE activityid = ?");
-        stmt.setInt(1, korvattava.getCents() + a.getCents());
-        stmt.setInt(2, korvattava.getActivityId());
+    @Override
+    public Integer findSumOfExpensesByDate(Date after, Date before, String passwordField) throws SQLException {
+        Connection con = db.getConnection();
+        PreparedStatement stmt = con.prepareStatement("SELECT SUM(cents) AS cents FROM activity WHERE date >= (?) AND date <= (?) AND activitysuser = (?)");
+        
+        stmt.setDate(1, after);
+        stmt.setDate(2, before);
+        stmt.setString(3, passwordField);
+        
+        int cents = 0;
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            cents = rs.getInt("cents");
+        }
+        stmt.close();
+        rs.close();
+        con.close();
+        return cents;
+  
+    }
+    public ArrayList<Integer> findExpensesByDate(LocalDate after, LocalDate before, String passwordField) throws SQLException {
+        Connection con = db.getConnection();
+        PreparedStatement stmt = con.prepareStatement("SELECT cents AS cents FROM activity WHERE date >= (?) AND date <= (?) AND activitysuser = (?)");
+        
+        stmt.setDate(1, localDateToDate(after));
+        stmt.setDate(2, localDateToDate(before));
+        stmt.setString(3, passwordField);
+        
+        ArrayList<Integer> centsList = new ArrayList<>();
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            centsList.add(rs.getInt("cents"));
+        }
+        stmt.close();
+        rs.close();
+        con.close();
+        return centsList;
+  
+    }
+    public Date localDateToDate(LocalDate date) {
+        return java.sql.Date.valueOf(date);
+    }
+    @Override
+    public Activity update(Activity existingActivity, Activity newActivity) throws SQLException {
+        Connection con = db.getConnection();
+        PreparedStatement stmt = con.prepareStatement("UPDATE Activity SET cents = ? WHERE activityid = ?");
+        stmt.setInt(1, newActivity.getCents() + existingActivity.getCents());
+        stmt.setInt(2, newActivity.getActivityId());
 
         stmt.executeUpdate();
         stmt.close();
         con.close();
-
-        return korvattava;
+        return newActivity;
         
     }
-    public HashMap<String, ArrayList<Activity>> findAllByCategory(Date after, Date before, String password) throws SQLException {
+    @Override
+    public HashMap<String, ArrayList<Activity>> findAllByCategory(Date after, Date before, String username) throws SQLException {
         HashMap<String, ArrayList<Activity>> map = new HashMap<>();
-        ArrayList<Activity> activities = findAllByUser(password);
-                
+        ArrayList<Activity> activities = findAllByUser(username);
         if (activities.isEmpty()) {
-            System.out.println("tyhja findAllByCategory");
             return map;
         }
         for (Activity a: activities) {
@@ -199,12 +198,6 @@ public class ActivityDao implements Dao<Activity, Integer, Integer> {
             }
         }
         return map;
-        
-    }
-    public Date convertStringToDate(String strDate) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(strDate.substring(6, 10)).append("-").append(strDate.substring(3, 5)).append("-").append(strDate.substring(0, 2));        
-        return java.sql.Date.valueOf(sb.toString());
     }
 }
 

@@ -1,3 +1,5 @@
+package tests;
+
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -6,36 +8,39 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import saastopossuapp.dao.ActivityDao;
-import saastopossuapp.dao.UserDao;
+import saastopossuapp.dao.UserAccountDao;
 import saastopossuapp.dao.Database;
 import saastopossuapp.domain.Activity;
 import saastopossuapp.domain.UserAccount;
+import saastopossuapp.logic.Logic;
 
 public class ActivityDaoTest {
     private Database db;
     private ActivityDao ad;
     private Activity testActivity;
+    private Activity testActivity2;
     private UserAccount testUser;
-    private UserDao ud;
-    
+    private UserAccountDao ud;
+    private Logic logic;
    
     @Before
     public void setUp() throws SQLException, ClassNotFoundException {
         this.db = new Database();
         this.ad = new ActivityDao(db);
         
-        this.ud = new UserDao(db);
+        this.ud = new UserAccountDao(db);
         this.testUser = new UserAccount("tester");
         testUser.setUserId(ud.findAll().size()+1);
         testUser.setUserBudget(100);
-        ud.save(testUser);
+        ud.saveOrUpdate(testUser);
         
-        this.testActivity = new Activity(10);
-        testActivity.setActivityId(ad.findAll().size()+1);
-        testActivity.setActivitysUser("tester");
-        testActivity.setCategory("category");
         Date date = java.sql.Date.valueOf("1992-03-31");
-        testActivity.setDate(date);
+        this.testActivity = new Activity("tester", 10, date, "category");
+        testActivity.setActivityId(ad.findAll().size()+1);
+        
+        Date date2 = java.sql.Date.valueOf("1992-03-30");
+        this.testActivity2 = new Activity("tester", 20, date2, "category");
+        testActivity2.setActivityId(ad.findAll().size()+1);
         
     }
     @After
@@ -72,24 +77,20 @@ public class ActivityDaoTest {
         assertEquals(koko+1, ad.findAllByUser("tester").size()); 
     }
     @Test
-    public void findAllByDateWorks() throws SQLException {
+    public void findSumOfExpensesByDateWorks() throws SQLException {
         Date after = java.sql.Date.valueOf("1992-03-31");
         Date before = java.sql.Date.valueOf("1992-04-01");
         ad.saveOrUpdate(testActivity, "tester");
-        assertEquals(1, ad.findAllByDate(after, before, "tester").size()); 
+        assertEquals(testActivity.getCents(), (int)ad.findSumOfExpensesByDate(after, before, "tester")); 
     }
     @Test
     public void findExpensesByDateWorksWhenDatesAreValid() throws SQLException {
         ad.saveOrUpdate(testActivity, "tester");
-        int cents = ad.findExpensesByDate("31.03.1992", "tester");
+        Date date = java.sql.Date.valueOf("1992-03-31");
+        int cents = ad.findSumOfExpensesByDate(date, date, "tester");
         assertEquals(10, cents); 
     }
-    @Test //2018-11-25 -muotoon
-    public void convertStringToDateWorks() throws SQLException {
-        String str = "31.03.1992";
-        Date date = java.sql.Date.valueOf("1992-03-31");
-        assertEquals(date, ad.convertStringToDate(str)); 
-    }
+
     @Test
     public void addExpenseToSameDayDoesntAddNewExpense() throws SQLException {
         int sizeBefore = ad.findAllByUser("tester").size();
@@ -99,6 +100,21 @@ public class ActivityDaoTest {
     }
     @Test
     public void findAllByCategoryReturnsEmptyMapIfNoActivities() throws SQLException {
+        Date after = java.sql.Date.valueOf("1990-03-30");
+        Date before = java.sql.Date.valueOf("1990-03-31");
+        assertEquals(0, ad.findAllByCategory(after, before, "tester").size());
+    }
+    @Test
+    public void findAllByCategory_ReturnsMapThatDoesntHaveSameCategoryTwiceIfDifferentDate() throws SQLException {
+        ad.saveOrUpdate(testActivity, "tester");
+        ad.saveOrUpdate(testActivity2, "tester");
+        Date after = java.sql.Date.valueOf("1992-03-30");
+        Date before = java.sql.Date.valueOf("1992-03-31");
+        assertEquals(1, ad.findAllByCategory(after, before, "tester").size());
+    }
+    @Test
+    public void findAllByCategory_ReturnsMapThatHasActivitiesFromRightTimePeriod() throws SQLException {
+        ad.saveOrUpdate(testActivity, "tester");
         Date after = java.sql.Date.valueOf("1990-03-30");
         Date before = java.sql.Date.valueOf("1990-03-31");
         assertEquals(0, ad.findAllByCategory(after, before, "tester").size());

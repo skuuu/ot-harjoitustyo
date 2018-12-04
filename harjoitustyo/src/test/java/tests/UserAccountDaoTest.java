@@ -1,3 +1,5 @@
+package tests;
+
 
 
 import java.sql.SQLException;
@@ -7,14 +9,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import saastopossuapp.dao.UserDao;
+import saastopossuapp.dao.UserAccountDao;
 import saastopossuapp.dao.Database;
 import saastopossuapp.domain.UserAccount;
 
 
 public class UserAccountDaoTest {
     private Database db;
-    private static UserDao ud;
+    private static UserAccountDao ud;
     private UserAccount testUser;
     
     public UserAccountDaoTest() {
@@ -32,7 +34,7 @@ public class UserAccountDaoTest {
     @Before
     public void setUp() throws ClassNotFoundException, SQLException {
         db = new Database();
-        ud = new UserDao(db);
+        ud = new UserAccountDao(db);
         testUser = new UserAccount("tester");
         testUser.setUserId(ud.findAll().size()+1);
     }
@@ -44,28 +46,28 @@ public class UserAccountDaoTest {
     
     @Test
     public void saveWorks() throws SQLException {
-        assertEquals(testUser, ud.save(testUser)); 
+        assertEquals(testUser, ud.saveOrUpdate(testUser)); 
     }
 
     @Test
     public void findOneworksWhenUsernameExists() throws SQLException {
-        ud.save(testUser);
+        ud.saveOrUpdate(testUser);
         assertEquals(testUser.getUsername(), ud.findOne("tester").getUsername());
     }
     @Test
     public void findOneworksWhenUsernameDoesntExist() throws SQLException {
-        ud.save(testUser);
+        ud.saveOrUpdate(testUser);
         assertEquals(null, ud.findOne("notex1212"));
     }
     @Test
     public void findAllWorks() throws SQLException {
         int koko = ud.findAll().size();
-        ud.save(testUser);
+        ud.saveOrUpdate(testUser);
         assertEquals(koko+1, ud.findAll().size()); 
     }
     @Test
     public void updateBudgetWorks() throws SQLException {
-        ud.save(testUser);
+        ud.saveOrUpdate(testUser);
         ud.updateBudget("tester", 20);
         assertEquals(20, ud.findOne("tester").getUserBudget()); 
     }
