@@ -14,7 +14,7 @@ Harjoitustyö löytyy [harjoitustyo](https://github.com/skuuu/ot-harjoitustyo/tr
  [Maksukortti](https://github.com/skuuu/ot-harjoitustyo/tree/master/laskarit/viikko2/Maksukortti)  
  [Unicafe](https://github.com/skuuu/ot-harjoitustyo/tree/master/laskarit/viikko2/Unicafe)
  <br/>
- ## Viikko 3, 4  
+ ## Viikko 3, 4, 5  
  SaastopossuApp lisätty tämänhetkisenä versiona [harjoitustyo](https://github.com/skuuu/ot-harjoitustyo/tree/master/harjoitustyo) -kansioon.
  <br/>
  <br/>
