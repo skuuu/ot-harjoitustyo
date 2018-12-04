@@ -11,6 +11,6 @@
 |25.11.| 2    | refactoring and editing class structure |
 | 26.11.  |   7  | some serious coding. Separating logic and gui |
 | 27.11.  |  5   | tests, class structure diagram |
-|       |     |  |
-|   |     |  |
-| yht   | 36   | | 
+|   28.11.    |  3   | database changed |
+|29.11|     |  3|code
+| yht   | 44   | | 
