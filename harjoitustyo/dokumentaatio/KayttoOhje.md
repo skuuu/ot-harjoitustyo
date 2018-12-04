@@ -4,13 +4,14 @@
 Lataa tiedosto [saastopossu.jar](https://github.com/skuuu/ot-harjoitustyo/releases/tag/saastopossuAppv.1.0) 
 
 ## Konfigurointi
+Ohjelman onnistunut käynnistys edellyttää, että .jar -tiedosto ja users.db -tiedosto on asennettu samaan kansioon ko nimillä. (Molemmat erillisinä tiedostoina releasessa). 
 
 ## Ohjelman käynnistäminen
 
 Ohjelma käynnistetään komennolla 
 
 ```
-java -jar Saastopossu_release_27.11.2018.jar
+java -jar Saastopossu-1.0-SNAPSHOT.jar
 ```
 
 ## Kirjautuminen
