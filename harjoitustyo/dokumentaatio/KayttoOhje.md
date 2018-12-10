@@ -31,6 +31,8 @@ Onnistuneen kirjautumisen myötä siirrytään käyttäjän kulut näyttävään
 
 Näkymä mahdollistaa kulujen näyttämisen graafisesti. Oletuksena sovellus näyttää kulut kuukauden ajalta. Aikavälin voi määritellä valitsemalla päivät DatePicker-valikosta. Kulun voi lisätä kirjoittamalla summan (eurot, sentit) niille merkattuihin tekstikenttiin ja valitsemalla kululle päivämäärän sekä kategorian _chooose category_ -valikosta. Uuden kategorian voi määritellä _create new_ -valinnalla, jolloin kategorian nimentään avautuu tekstikenttä. Kulu tallettuu klikkaamalla painiketta _Add_. 
 
+## Budjetin määritteleminen  
 Klikkaamalla näkymän oikean reunan painiketta _Settings_ käyttäjä siirtyy Settings-näkymään, missä oman budjettinsa voi määritellä ja muuttaa klikkaamalla _set_, jolloin sovellus palauttaa päänäkymään. Päänäkymään voi palata muuuttamatta budjettia myös _back_ -painikkeella. 
 
-Klikkaamalla aloitusnäkymässä _logout_ käyttäjä siirtyy takaisin kirjautumisnäkymään.
+## Uloskirjautuminen 
+Klikkaamalla aloitusnäkymässä _logout_ käyttäjä siirtyy takaisin kirjautumisnäkymään. Sovelluksen voi sulkea oikeasta yläkulmasta.
