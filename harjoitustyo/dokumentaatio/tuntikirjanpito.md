@@ -12,5 +12,10 @@
 | 26.11.  |   7  | some serious coding. Separating logic and gui |
 | 27.11.  |  5   | tests, class structure diagram |
 |   28.11.    |  3   | database changed |
-|29.11|    3 | code |
-| yht   | 44   | | 
+|29.11|    3 | code |  
+|30.11|   3  | refactoring | 
+|5.11.|  4   | new class Converter + tests | 
+|6.11.|   3  | edited userInterface based on feedback | 
+|9.11.|   3  | javadoc | 
+|10.11.|  3   | arkkitehtuurikuvaus.md | 
+| yht   | 60   | | 
