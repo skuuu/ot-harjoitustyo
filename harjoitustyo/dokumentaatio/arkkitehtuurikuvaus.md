@@ -54,17 +54,17 @@ Päätoiminnallisuudet kuvattu seuraavaksi sekvenssikaavioina.
 #### käyttäjän kirjautuminen  
 Käyttäjä voi kirjautua aloitusnäkymässä painikkeesta _login_ jonka aktivaatio kutsuu logic-luokan metodia _checkUsername_ ja palauttaa true, jos käyttäjänimi löytyy tietokannasta ja muuten false. 
 
-<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/loginDiagram.jpg" width="500">
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/loginDiagram.jpg" width="600">
 
-#### uuden käyttäjän luominen  
+#### Uuden käyttäjän luominen  
 Uuden käyttäjän voi luoda _create new user account_ -painikkeesta, jolloin käyttöliittymä kutsuu logic-luokan metodia _createUser_ joka kutsuu UserAccountDao-luokan metodia _saveOrUpdate_ ja palauttaa true, jos tallennus onnistui ja muuten false. False-tapauksissa käyttäjälle näytetään virheviesti. 
 
-<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/IMG_20181204_235242.jpg" width="500">
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/createNewUserDiagram.jpg" width="600">
 
 #### Activityn luominen  
 Activity luodaan valitsemalla päivä ja kategoria, syöttämällä summa ja aktivoimalla painike _add_, jolloin kutsutaan Logic-luokan metodia addExpense. Tästä metodista joko päivitetään tai lisätään tietokantaan ActivityDao-luokan saveOrUpdate-metodia käyttäen. 
 
-<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/newActivityDiagram.jpg" width="500">
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/newActivityDiagram.jpg" width="600">
 
 #### Muut toiminnallisuudet  
 Sovelluksen toimintaperiaate on samankaltainen myös muille toiminnoille. Graafinen käyttöliittymä kutsuu logic-luokkaa, josta tarvittaessa kutsutaan edelleen Analysis-luokkaa tai Converter-luokkaa. Logic-luokalla on pääsy UserAccountDao- ja ActivityDao -luokkiin rajapintojen UserAccountDaoInterface ja ActivityDaoInterface kautta. 
