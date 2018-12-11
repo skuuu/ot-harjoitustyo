@@ -23,7 +23,7 @@ Tällä hetkellä kaipaisin apua seuraavissa asioissa:
 
 ## Releaset
 
-[Viikko 5](https://github.com/skuuu/ot-harjoitustyo/releases/tag/Saastopossuv1.1)  
+[Viikko 6](https://github.com/skuuu/ot-harjoitustyo/releases/tag/Saastopossuv1.2)  
 
 ## Komentorivitoiminnot
 
