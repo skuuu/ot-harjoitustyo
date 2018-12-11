@@ -1,7 +1,7 @@
 # Käyttöohje
 
 
-Lataa tiedosto [saastopossu.jar](https://github.com/skuuu/ot-harjoitustyo/releases/tag/saastopossuAppv.1.0) 
+Lataa tiedosto [saastopossu.jar](https://github.com/skuuu/ot-harjoitustyo/releases/tag/Saastopossuv1.2) 
 
 ## Konfigurointi
 Ohjelman onnistunut käynnistys edellyttää, että .jar -tiedosto ja users.db -tiedosto on asennettu samaan kansioon ko nimillä. (Molemmat erillisinä tiedostoina releasessa). 
