@@ -7,6 +7,9 @@ import java.util.*;
 import java.sql.*;
 import saastopossuapp.domain.UserAccount;
 
+/**
+ * Class is responsible for database access operations related to UserAccounts
+ */
 public class UserAccountDao implements UserAccountDaoInterface {
     private Database db;
     

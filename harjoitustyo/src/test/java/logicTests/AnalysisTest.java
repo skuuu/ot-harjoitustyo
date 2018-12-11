@@ -1,4 +1,4 @@
-package tests;
+package logicTests;
 
 
 
@@ -6,9 +6,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -22,7 +19,7 @@ import saastopossuapp.dao.UserAccountDao;
 import saastopossuapp.domain.Activity;
 import saastopossuapp.domain.UserAccount;
 import saastopossuapp.logic.Analysis;
-import saastopossuapp.logic.Logic;
+import saastopossuapp.logic.Converter;
 
 
 public class AnalysisTest {
@@ -44,6 +41,7 @@ public class AnalysisTest {
     private LocalDate to;
     private Integer days;
     private Integer budget;
+    private Converter conv;
     
     public AnalysisTest() {
     }
@@ -100,7 +98,7 @@ public class AnalysisTest {
 
     @Test
     public void countExpensesFromBudgetWorks() throws SQLException {
-        assertEquals(4.0, analysis.countExpensesFromBudget(), 0.01);
+        assertEquals(4.0, analysis.countExpensePercentageFromBudget(), 0.01);
     }
     @Test
     public void countBudgetForChosenPeriodWorks() throws SQLException {

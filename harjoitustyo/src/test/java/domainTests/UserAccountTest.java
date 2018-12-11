@@ -1,6 +1,4 @@
-package tests;
-
-
+package domainTests;
 
 import org.junit.Before;
 import org.junit.Test;

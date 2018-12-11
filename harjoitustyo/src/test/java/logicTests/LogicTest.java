@@ -1,4 +1,4 @@
-package tests;
+package logicTests;
 
 
 import java.sql.Date;
@@ -15,6 +15,7 @@ import saastopossuapp.dao.Database;
 import saastopossuapp.domain.Activity;
 import saastopossuapp.domain.UserAccount;
 import saastopossuapp.logic.Analysis;
+import saastopossuapp.logic.Converter;
 import saastopossuapp.logic.Logic;
 
 public class LogicTest {
@@ -28,9 +29,11 @@ public class LogicTest {
     private Date activitysDate;
     private Date activitysDate2;
     private LocalDate ldActivitysDate;
+    private LocalDate ldActivitysDate2;
     private LocalDate ldBefore;
     private LocalDate ldAfter;
     private Analysis analysis;
+    private Converter conv;
     
     @Before
     public void setUp() throws SQLException, ClassNotFoundException { 
@@ -38,6 +41,7 @@ public class LogicTest {
         this.ad = new ActivityDao(db);     
         this.ud = new UserAccountDao(db);
         this.logic = new Logic(ud, ad);
+        this.conv = new Converter();
         
         String username = "tester";
         this.testUser = new UserAccount("tester");
@@ -56,6 +60,7 @@ public class LogicTest {
         ad.saveOrUpdate(testActivity, "tester");
         
         this.activitysDate2 = java.sql.Date.valueOf("2018-11-03");
+        this.ldActivitysDate2 = LocalDate.parse("2018-11-03", formatter);
         this.testActivity2 = new Activity("tester", 10, activitysDate2, "category2");
         testActivity2.setActivityId(ad.findAll().size()+1);
         logic.checkUsername("tester");
@@ -70,7 +75,7 @@ public class LogicTest {
     @Test
     public void addExpenseWithDifferentDateAndSameCategoryCreatesNewActivity() throws SQLException {
         int sizeBefore = ad.findAllByUser("tester").size();
-        logic.addExpense(null, "category", "20", "20", activitysDate2);
+        logic.addExpense(null, "category", "20", "20", ldActivitysDate2);
         assertEquals(sizeBefore+1, ad.findAllByUser("tester").size());
      
         
@@ -78,13 +83,13 @@ public class LogicTest {
     @Test
     public void addExpenseWithSameDateAndNewCategoryCreatesNewActivity() throws SQLException {
         int sizeBefore = ad.findAllByUser("tester").size();
-        logic.addExpense("test", "create new", "20", "20", activitysDate2);
+        logic.addExpense("test", "create new", "20", "20", ldActivitysDate2);
         assertEquals(sizeBefore+1, ad.findAllByUser("tester").size());
        
     }
     @Test
     public void addExpenseWithNonValidAmountReturnsFalse() throws SQLException {
-        assertEquals(false, logic.addExpense("test", "create new", "", "", activitysDate2));
+        assertEquals(false, logic.addExpense("test", "create new", "", "", ldActivitysDate2));
        
     }
     @Test
@@ -93,10 +98,7 @@ public class LogicTest {
         assertEquals("Total expenses on 02.11.2018: 0.0 €", logic.getExpenseLabelText(dateString));
     }
     
-    @Test
-    public void toCentsWorks(){
-        assertEquals(1010, logic.toCents("10", "10"));
-    }
+    
 
     @Test
     public void changeBudgetDoesntWorkWhenInvalidValues(){
@@ -109,16 +111,7 @@ public class LogicTest {
         assertEquals(100, ud.findOne("tester").getUserBudget());
    
         
-    }
-    @Test
-    public void toEurosWorks() throws SQLException{
-        assertEquals(1, logic.toEuros(100), 0.01);
-     
-    }
-    @Test
-    public void convertToDateWorks() throws SQLException{
-        assertEquals(activitysDate, logic.localDateToDate(ldActivitysDate));
-     
+    
     }
     @Test
     public void getBudgetAnalysisInvalidDatesReturnsErrorMessage() throws SQLException{
@@ -130,7 +123,7 @@ public class LogicTest {
         StringBuilder sb = new StringBuilder();
             sb.append("Total expenses in the chosen time period: 0.1€ (average 0.1€/day in the chosen time period)")
                     .append("\nYour daily budget: 1.0€")
-                    .append("\nYour budget for chosen time period: 5.0€, (spent int the chosen time period: ")
+                    .append("\nYour budget for chosen time period: 5.0€, (spent in the chosen time period: ")
                     .append ("2.0%)");
        
         assertEquals(sb.toString(), logic.getBudgetAnalysis(ldAfter, ldBefore));
@@ -147,8 +140,8 @@ public class LogicTest {
     @Test
     public void createUser_dontCreateUserIfInvalidUsername() throws SQLException{
         int users = ud.findAll().size();
-        assertEquals(false, logic.createUser("abcdefghijkl111111111111111"));
-        ud.delete("abcdefghijkl111111111111111");
+        assertEquals(false, logic.createUser("abcdefghijkl111111111111111111111111111111111111111111"));
+        ud.delete("abcdefghijkl111111111111111111111111111111111111111111");
       
     }
     @Test
@@ -192,10 +185,7 @@ public class LogicTest {
         assertEquals(1, logic.createSerie(ldAfter, ldBefore).size());
    
     }
-    @Test
-    public void localDateToStringWorks() throws SQLException{
-        assertEquals("02.11.2018", logic.localDateToString(ldActivitysDate));
-    }
+   
     @Test
     public void correctCents_Returns00WhenEmptyString() throws SQLException{
         assertEquals("00", logic.correctCents(""));
@@ -209,12 +199,20 @@ public class LogicTest {
         assertEquals(false, logic.validateStringInput(null));
     }
     @Test
-    public void validateStringInputReturnsFalseIfNotNumbers() throws SQLException{
+    public void validateStringInput_ReturnsFalseIfNotNumbers() throws SQLException{
         assertEquals(false, logic.validateStringInput("1=1"));
     }
     @Test
-    public void validateStringInputReturnsTrueIfvalidInput() throws SQLException{
+    public void validateStringInput_ReturnsTrueIfvalidInput() throws SQLException{
         assertEquals(true, logic.validateStringInput("10"));
     }
-    
+    @Test
+    public void arrangedXAxisCategories_ReturnsArrangedObservableList() throws SQLException {
+        ad.saveOrUpdate(testActivity2, "tester");
+        assertEquals("02.11.2018",  logic.arrangedXAxisCategories(ldAfter, ldBefore).get(0));
+    }
+    @Test
+    public void setBarChartTitle_returnsCorrectString() throws SQLException {
+        assertEquals("Daily Expenses from 01.11.2018-05.11.2018",  logic.setBarChartTitle(ldAfter, ldBefore));
+    }
 }

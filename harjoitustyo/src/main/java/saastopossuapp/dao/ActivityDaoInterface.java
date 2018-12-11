@@ -3,6 +3,7 @@ package saastopossuapp.dao;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ import saastopossuapp.domain.Activity;
 
 public interface ActivityDaoInterface {
     
-//    Activity findOne(Integer key) throws SQLException;
+    ArrayList<Integer> findExpensesByDate(LocalDate after, LocalDate before, String passwordField)throws SQLException;
     List<Activity> findAll() throws SQLException;
     void delete(String username) throws SQLException;
     Activity saveOrUpdate(Activity lisattava, String password) throws SQLException;

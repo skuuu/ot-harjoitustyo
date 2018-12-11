@@ -3,7 +3,9 @@ package saastopossuapp.domain;
 
 import java.sql.Date;
 
-
+/**
+ * Class defines the expenses added by user
+ */
 public class Activity implements Comparable<Activity> {
     private int activityId;
     private String activitysUser; 

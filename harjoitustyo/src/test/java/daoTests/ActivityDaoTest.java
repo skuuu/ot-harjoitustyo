@@ -1,4 +1,4 @@
-package tests;
+package daoTests;
 
 
 import java.sql.Date;

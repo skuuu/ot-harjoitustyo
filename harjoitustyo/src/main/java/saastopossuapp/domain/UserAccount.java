@@ -1,5 +1,8 @@
 package saastopossuapp.domain;
 
+/**
+ * Class defines Users
+ */
 public class UserAccount {
 
     private int userId;

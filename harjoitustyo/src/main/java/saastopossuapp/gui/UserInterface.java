@@ -32,12 +32,16 @@ import saastopossuapp.dao.UserAccountDao;
 import saastopossuapp.dao.Database;
 import saastopossuapp.logic.Logic;
 
-
+/**
+ * Class creates the graphic user interface. 
+ * This is also application's Main Class.
+ */
 public class UserInterface extends Application {
     private Logic logic;
     private String username; 
     private DatePicker afterDatePicker;
     private DatePicker beforeDatePicker;
+    
 
     @Override
     public void init() throws ClassNotFoundException {
@@ -46,7 +50,7 @@ public class UserInterface extends Application {
         ActivityDao activityDao = new ActivityDao(db);
         this.afterDatePicker = new DatePicker(LocalDate.now().minusMonths(1));
         this.beforeDatePicker = new DatePicker(LocalDate.now());
-        logic = new Logic(userAccountDao, activityDao);
+        this.logic = new Logic(userAccountDao, activityDao);
         
         
     }
@@ -60,56 +64,65 @@ public class UserInterface extends Application {
         Button createUserButton = new Button("Create new user account");
         Scene passwordScene = createPasswordScene(loginInstructionLabel, loginButton, passwordErrorLabel, passwordField, createUserButton);
         
-        //createUser Scene:
+        //createNewUser Scene:
         Label howToCreateText = new Label("Type username to create a new account:");
         TextField newUsernameField = new TextField();
         Button signInButton = new Button("Sign in");
         Button backToLoginButton = new Button ("Back");
-        Scene newUserScene = createNewUserScene(backToLoginButton, howToCreateText, newUsernameField, signInButton);
+        Label errorMessage = new Label (" ");
+        Scene newUserScene = createNewUserScene(errorMessage, backToLoginButton, howToCreateText, newUsernameField, signInButton);
         
         // Start-Scene
-        Label transactionLabel = new Label("Expense:");
+        Label transactionLabel = new Label("Expense amount:   ");
+        Label centsSeparator = new Label (" , ");
+        Label euroLabel = new Label (" €  ");
         TextField eurosFieldTransaction = new TextField();
         TextField centsFieldTransaction = new TextField();
         Label inputErrorMessage = new Label (" ");
-        Label dateLabel = new Label ("Date:  ");
+        Label dateLabel = new Label ("Expense date:        ");
         DatePicker transactionDatePicker = new DatePicker(LocalDate.now());
         Label showLabel = new Label("Show expenses");
         Label fromLabel = new Label("From:  ");
         Label minusLabel = new Label("To:     ");
         Label expenseLabel = new Label (" ");
         Label totalExpenses = new Label (" ");
-        Button transactionButton = new Button ("Add");
+        Button transactionButton = new Button ("Add Expense");
         Button settingsButton = new Button ("Settings");
         Button logoutButton = new Button ("logout");
-        Label chooseCategoryLabel = new Label("Choose category:   ");
+        Label chooseCategoryLabel = new Label("Expense category: ");
         ComboBox categoryChoice = new ComboBox();
         TextField newCategoryField = new TextField();
                 
         BorderPane startLayout = new BorderPane();            
-        Scene startScene = createStartScene(newCategoryField, chooseCategoryLabel, categoryChoice, startLayout, transactionLabel, eurosFieldTransaction, centsFieldTransaction, inputErrorMessage, dateLabel, transactionDatePicker,
+        Scene startScene = createStartScene(euroLabel, centsSeparator, newCategoryField, chooseCategoryLabel, categoryChoice, startLayout, transactionLabel, eurosFieldTransaction, centsFieldTransaction, inputErrorMessage, dateLabel, transactionDatePicker,
         beforeDatePicker, afterDatePicker, showLabel, fromLabel, minusLabel, expenseLabel, totalExpenses, transactionButton, settingsButton, logoutButton);        
 
         //Settings-Scene: 
         Label budgetLabel = new Label("Set your daily budget:  ");
         TextField eurosFieldBudget = new TextField();
         TextField centsFieldBudget = new TextField();
+        Label settingsCentsSeparator = new Label (" , ");
+        Label settingsEuroLabel = new Label (" €  ");
         Button backButton = new Button("back");
         Label budgetErrorMessage = new Label (" ");
         Button setBudgetButton = new Button("set");       
-        Scene settingsScene = createSettingsScene(eurosFieldBudget, backButton, centsFieldBudget, budgetLabel, setBudgetButton, budgetErrorMessage);
+        Scene settingsScene = createSettingsScene(settingsEuroLabel, settingsCentsSeparator, eurosFieldBudget, backButton, centsFieldBudget, budgetLabel, setBudgetButton, budgetErrorMessage);
                 
         //actions for buttons: 
         createUserButton.setOnMouseClicked(event -> {
+            errorMessage.setText(" ");
+            newUsernameField.clear();
             primaryStage.setScene(newUserScene);
         });
-        
        
         signInButton.setOnMouseClicked(event -> {
+            errorMessage.setText(" ");
             if(logic.createUser(newUsernameField.getText().trim())){
+               passwordField.clear();
                primaryStage.setScene(passwordScene);  
             }
-            //validointivirheviesti puuttuu vielä:
+            errorMessage.setText("Invalid username. Username must be unique and 2-30 characters (A-Z, a-z, 0-9)");
+            errorMessage.setTextFill(Color.RED);
         });
         
         backToLoginButton.setOnMouseClicked(event -> {
@@ -117,7 +130,7 @@ public class UserInterface extends Application {
         });
             
         setBudgetButton.setOnAction((setPressed) -> {
-            if (logic.changeBudget(eurosFieldBudget.getText(), centsFieldBudget.getText())){
+            if (logic.changeBudget(eurosFieldBudget.getText().trim(), centsFieldBudget.getText().trim())){
                 refreshScreen(newCategoryField, categoryChoice, afterDatePicker,  beforeDatePicker,  expenseLabel,  totalExpenses,  startLayout,  centsFieldTransaction,  eurosFieldTransaction,  inputErrorMessage);
                 primaryStage.setScene(startScene);
                 budgetErrorMessage.setText("  ");
@@ -137,11 +150,11 @@ public class UserInterface extends Application {
         });
 
         transactionButton.setOnAction((beforedaychosen) -> {
-            if (notNull(categoryChoice.getValue()) && logic.addExpense(newCategoryField.getText(), categoryChoice.getValue().toString(), eurosFieldTransaction.getText(), centsFieldTransaction.getText(), logic.localDateToDate(transactionDatePicker.getValue()))){
+            if (notNull(categoryChoice.getValue()) && logic.addExpense(newCategoryField.getText().trim(), categoryChoice.getValue().toString(), eurosFieldTransaction.getText().trim(), centsFieldTransaction.getText().trim(), transactionDatePicker.getValue())){
                 refreshScreen(newCategoryField, categoryChoice, afterDatePicker,  beforeDatePicker,  expenseLabel,  totalExpenses,  startLayout,  centsFieldTransaction,  eurosFieldTransaction,  inputErrorMessage);
-            }else{
+            } else {
                 inputErrorMessage.setTextFill(Color.RED);
-                inputErrorMessage.setText("Invalid input");
+                inputErrorMessage.setText("Invalid input.\nExpense must be > 0, cents max. 2 digits, category 3-20 characters.");
             }
         });
 
@@ -161,7 +174,7 @@ public class UserInterface extends Application {
         loginButton.setOnAction((event) -> {
             this.username = passwordField.getText().trim();
             try {
-                if (logic.checkUsername(passwordField.getText())==false) {
+                if (logic.checkUsername(passwordField.getText().trim())==false) {
                     passwordErrorLabel.setTextFill(Color.RED);
                     passwordErrorLabel.setText("Invalid username");
                 }else{
@@ -237,7 +250,7 @@ public class UserInterface extends Application {
         passwordLayout.add(loginButton, 0, 2);
         passwordLayout.add(passwordErrorLabel, 0, 3);
         passwordLayout.add(createUserButton, 0, 4);
-        passwordLayout.setPrefSize(1000, 480);
+        passwordLayout.setPrefSize(1060, 700);
         passwordLayout.setAlignment(Pos.CENTER);
         passwordLayout.setVgap(10);
         passwordLayout.setHgap(10);
@@ -245,13 +258,14 @@ public class UserInterface extends Application {
         return new Scene(passwordLayout);
         
     }
-    private Scene createNewUserScene(Button backToLoginButton, Label howToCreateText, TextField newUsernameField, Button signInButton){
+    private Scene createNewUserScene(Label errorMessage, Button backToLoginButton, Label howToCreateText, TextField newUsernameField, Button signInButton){
         GridPane newUserLayout = new GridPane();
         newUserLayout.add(howToCreateText, 0, 0);
         newUserLayout.add(newUsernameField, 0, 1);
         newUserLayout.add(signInButton, 1, 1);
         newUserLayout.add(backToLoginButton, 2, 1);
-        newUserLayout.setPrefSize(1000, 480);
+        newUserLayout.add(errorMessage, 0,3);
+        newUserLayout.setPrefSize(1060, 700);
         newUserLayout.setAlignment(Pos.CENTER);
         newUserLayout.setVgap(10);
         newUserLayout.setHgap(10);
@@ -259,9 +273,9 @@ public class UserInterface extends Application {
         return new Scene(newUserLayout);
         
     }
-    public Scene createStartScene(TextField newCategoryField, Label chooseCategoryLabel, ComboBox categoryChoice, BorderPane startLayout, Label transactionLabel, TextField eurosFieldTransaction, TextField centsFieldTransaction, Label inputErrorMessage, Label dateLabel, DatePicker transactionDatePicker,
+    public Scene createStartScene(Label euroLabel, Label centsSeparator, TextField newCategoryField, Label chooseCategoryLabel, ComboBox categoryChoice, BorderPane startLayout, Label transactionLabel, TextField eurosFieldTransaction, TextField centsFieldTransaction, Label inputErrorMessage, Label dateLabel, DatePicker transactionDatePicker,
         DatePicker beforeDatePicker, DatePicker afterDatePicker, Label showLabel, Label fromLabel, Label minusLabel, Label expenseLabel, Label totalExpenses, Button transactionButton, Button settingsButton, Button logoutButton) throws SQLException{
-        startLayout.setPrefSize(1000, 480);
+        startLayout.setPrefSize(1060, 700);
         startLayout.setPadding(new Insets(20, 20, 20, 20));
         dateLabel.requestFocus();
         transactionDatePicker.setEditable(false);
@@ -279,17 +293,25 @@ public class UserInterface extends Application {
         pane1.setAlignment(Pos.CENTER);
         pane1.setVgap(10);
         pane1.setHgap(10);
-        pane1.setPadding(new Insets(20, 20, 20, 20));
-        pane1.add(transactionLabel, 0, 0);
-        pane1.add(eurosFieldTransaction, 0, 1);
-        pane1.add(centsFieldTransaction, 0, 2);
+        pane1.setPadding(new Insets(20, 20, 80, 20));
+        HBox transactionBox = new HBox();
+        transactionBox.getChildren().add(transactionLabel);
+        transactionBox.getChildren().add(eurosFieldTransaction);
+        transactionBox.getChildren().add(centsSeparator);
+        transactionBox.getChildren().add(centsFieldTransaction);
+        transactionBox.getChildren().add(euroLabel);
+        eurosFieldTransaction.setMaxWidth(40.0);
+        centsFieldTransaction.setMaxWidth(40.0);
+        transactionBox.setAlignment(Pos.CENTER_LEFT);
+        pane1.add(transactionBox, 0, 2);
         HBox dateRowLayout = new HBox();
-        dateRowLayout.setAlignment(Pos.CENTER);
+        dateRowLayout.setAlignment(Pos.CENTER_LEFT);
         dateRowLayout.getChildren().add(dateLabel);
         dateRowLayout.getChildren().add(transactionDatePicker);
+        transactionDatePicker.setMaxWidth(130);
         pane1.add(dateRowLayout, 0, 3);
         HBox categoryRowLayout = new HBox();
-        categoryRowLayout.setAlignment(Pos.CENTER);
+        categoryRowLayout.setAlignment(Pos.CENTER_LEFT);
         categoryRowLayout.getChildren().add(chooseCategoryLabel);
         categoryRowLayout.getChildren().add(categoryChoice);
         categoryChoice.setPromptText("choose category");
@@ -339,45 +361,48 @@ public class UserInterface extends Application {
         return new Scene(startLayout);
         
     }
-    private Scene createSettingsScene(TextField eurosFieldBudget, Button backButton, TextField centsFieldBudget, Label budgetLabel, Button setBudgetButton, Label budgetErrorMessage){
+    private Scene createSettingsScene(Label eurosLabel, Label centsSeparator, TextField eurosFieldBudget, Button backButton, TextField centsFieldBudget, Label budgetLabel, Button setBudgetButton, Label budgetErrorMessage){
         GridPane settingsLayout = new GridPane();
-        settingsLayout.setPrefSize(600, 480);
+        settingsLayout.setPrefSize(1060, 700);
         settingsLayout.setAlignment(Pos.CENTER);
         settingsLayout.setVgap(10);
         settingsLayout.setHgap(10);
         settingsLayout.setPadding(new Insets(20, 20, 20, 20));
         HBox budgetRow = new HBox();
-        budgetRow.setAlignment(Pos.CENTER);
-        eurosFieldBudget.setPromptText("euros");
+        budgetRow.setAlignment(Pos.BASELINE_CENTER);
+        eurosFieldBudget.setPromptText("00");
         backButton.requestFocus();
-        centsFieldBudget.setPromptText("cents");
+        centsFieldBudget.setPromptText("00");
         budgetRow.getChildren().add(budgetLabel);
         budgetRow.getChildren().add(eurosFieldBudget);
+        budgetRow.getChildren().add(centsSeparator);
         budgetRow.getChildren().add(centsFieldBudget);
+        budgetRow.getChildren().add(eurosLabel);
         budgetRow.getChildren().add(setBudgetButton);
         budgetRow.getChildren().add(backButton);
+        centsFieldBudget.setMaxWidth(40);
+        eurosFieldBudget.setMaxWidth(40);
         settingsLayout.add(budgetRow, 0, 0);
         settingsLayout.add(budgetErrorMessage, 0, 1);
         return new Scene (settingsLayout);
         
     }
     public BarChart <String, Number> createBarChart(LocalDate afterDatePicker, LocalDate beforeDatePicker) throws SQLException{
-        String after = logic.localDateToString(afterDatePicker);
-        String before = logic.localDateToString(beforeDatePicker);
-
         CategoryAxis xAkseli = new CategoryAxis();
         NumberAxis yAkseli = new NumberAxis();
         xAkseli.setLabel("date");
         yAkseli.setLabel("€");
         BarChart<String, Number> pylvaskaavio = new BarChart<>(xAkseli, yAkseli);
         pylvaskaavio.setLegendVisible(true);
-        pylvaskaavio.setTitle("Daily Expenses from " + after + "-"+ before);
-        ArrayList<XYChart.Series> seriesList= logic.createSerie(afterDatePicker, beforeDatePicker);
+        pylvaskaavio.setTitle(logic.setBarChartTitle(afterDatePicker, beforeDatePicker));
+        ArrayList<XYChart.Series> seriesList = logic.createSerie(afterDatePicker, beforeDatePicker);
         seriesList.forEach((s) -> {
             pylvaskaavio.getData().add(s);
         });
+        xAkseli.setCategories(logic.arrangedXAxisCategories(afterDatePicker, beforeDatePicker));
         return pylvaskaavio;
     }
+    
     private boolean notNull(Object o){
         return o != null;
     }

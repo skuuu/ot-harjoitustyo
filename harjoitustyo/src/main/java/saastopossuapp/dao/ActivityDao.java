@@ -8,11 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import saastopossuapp.domain.Activity;
 
-
+/**
+ * Class is responsible for database access operations related to Activities
+ */
 public class ActivityDao implements ActivityDaoInterface {
     private Database db;
     
@@ -144,6 +147,7 @@ public class ActivityDao implements ActivityDaoInterface {
         return cents;
   
     }
+    @Override
     public ArrayList<Integer> findExpensesByDate(LocalDate after, LocalDate before, String passwordField) throws SQLException {
         Connection con = db.getConnection();
         PreparedStatement stmt = con.prepareStatement("SELECT cents AS cents FROM activity WHERE date >= (?) AND date <= (?) AND activitysuser = (?)");
@@ -196,6 +200,13 @@ public class ActivityDao implements ActivityDaoInterface {
                     map.get(a.getCategory()).add(a);                   
                 }
             }
+        }
+        return mapWithArrangedValues(map);
+    }
+    
+    public HashMap<String, ArrayList<Activity>> mapWithArrangedValues(HashMap<String, ArrayList<Activity>> map) {
+        for (ArrayList<Activity> a : map.values()) {
+            Collections.sort(a);
         }
         return map;
     }
