@@ -6,45 +6,44 @@
 ## Käyttöliittymä
 
 Käyttöliittymä sisältää neljä erillistä näkymää
-- kirjautumisnäkymä
-- uuden käyttäjän luominen
-- päänäkymä (graafinen esitys menoista)
-- Settings-näkymä
+- kirjautumisnäkymä (passwordScene)
+- uuden käyttäjän luominen (newUserScene)
+- päänäkymä (startScene)
+- asetusnäkymä (SettingsScene)
 
-jokainen näistä on toteutettu omana [Scene](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/Scene.html)-oliona. Näkymistä yksi kerrallaan on näkyvänä eli sijoitettuna sovelluksen [stageen](https://docs.oracle.com/javase/8/javafx/api/javafx/stage/Stage.html). Graafinen käyttöliittymä on rakennettu ohjelmallisesti luokassa [saastopossu.gui.UserInterface]().
+jokainen näistä on toteutettu omana Scene-olionaan. Näkymistä yksi kerrallaan on näkyvänä eli sijoitettuna sovelluksen Stageen. Graafinen käyttöliittymä on rakennettu ohjelmallisesti luokassa [gui.UserInterface](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/main/java/saastopossuapp/gui/UserInterface.java).
 
 Käyttöliittymä on pyritty eristämään täysin sovelluslogiikasta, se ainoastaan kutsuu sopivin parametrein sovelluslogiikan toteuttavan luokan _logic_ metodeja. Luokka _logic_ taas pääsee käyttämään luokkaa _Converter_, jossa hoidetaan muunnoksia (raha- ja tyyppimuunnokset) sekä _Analysis_, jossa hoidetaan budhettiin liittyvät laskutoimitukset. 
 
-Kun sovelluksen tilanne muuttuu, kutsutaan sovelluksen metodia [refreshScreen]() joka renderöi päänäkymän uudelleen.
+Kun sovelluksen tilanne muuttuu, kutsutaan sovelluksen metodia _refreshScreen_ joka renderöi päänäkymän uudelleen.
 
 ## Sovelluslogiikka  
 
-Sovelluksen loogisen datamallin muodostavat luokat [UserAccount]() ja [Activity](), jotka kuvaavat käyttäjiä ja käyttäjien kuluja:
+Sovelluksen loogisen datamallin muodostavat luokat [domain.UserAccount](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/main/java/saastopossuapp/domain/UserAccount.java) ja [domain.Activity](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/main/java/saastopossuapp/domain/Activity.java), jotka kuvaavat käyttäjiä ja käyttäjien kuluja (kts. tietokantakaavio kohdasta tietojen pysyväistallennus).
 
-
-Toiminnallisista kokonaisuuksista vastaa luokka [Logic](). Luokka tarjoaa kaikille käyttäliittymän toiminnoille oman metodin. Näitä ovat esim.
+Toiminnallisista kokonaisuuksista vastaa luokka [logic.Logic](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/main/java/saastopossuapp/logic/Logic.java). Luokka tarjoaa kaikille käyttäliittymän toiminnoille oman metodin. Näitä ovat esim.
 CheckUsername,
 AddExpense,
 changeBudget.
 
 Luokka _Logic_ pääsee käsiksi käyttäjiin ja kuluihin tietojen tallennuksesta vastaavaan pakkauksessa _saastopossuapp.dao_ sijaitsevien rajapinnat _ActivityDaoInterface_ ja _UserAccountDaoInterface_ toteuttavien luokkien _ActivityDao_ ja _UserDao_ kautta. 
 
-Muunnosten (tyyppimuunnokset ja rahamuunnokset) käisttely on eriytetty _logic_ -luokasta luokkaan _Converter_ ja budjettiin liittyvät analyysit luokkaan _Analysis_.
+Muunnosten (tyyppimuunnokset ja rahamuunnokset) käisttely on eriytetty _logic_ -luokasta luokkaan [logic.Converter](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/main/java/saastopossuapp/logic/Converter.java) ja budjettiin liittyvät analyysit luokkaan [logic.Analysis](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/main/java/saastopossuapp/logic/Analysis.java).
 
 Ohjelman osien suhdetta kuvaava luokka/pakkauskaavio:  
 <img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/Packagediagram.jpeg" width="600">
 
 
 ## Tietojen pysyväistallennus  
-Pakkauksen todoapp.dao luokat UserAccounDao ja ActivityDao huolehtivat tietojen tallettamisesta tiedostoihin.
+Pakkauksen todoapp.dao luokat [dao.UserAccounDao](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/main/java/saastopossuapp/dao/UserAccountDao.java) ja [dao.ActivityDao](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/main/java/saastopossuapp/dao/ActivityDao.java) huolehtivat tietojen tallettamisesta tiedostoihin.
 
-Luokat noudattavat Data Access Object -suunnittelumallia. Luokat on eristetty rajapintojen UseracoounDaoInterface ja ActivityDaoInterface taakse. Luokat ovat Dao-tyyppinsä takia korvattavissa helposti. 
+Luokat noudattavat Data Access Object -suunnittelumallia. Luokat on eristetty rajapintojen [dao.UseracoounDaoInterface](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/main/java/saastopossuapp/dao/UserAccountDaoInterface.java) ja [dao.ActivityDaoInterface](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/main/java/saastopossuapp/dao/ActivityDaoInterface.java) taakse. Luokat ovat Dao-tyyppinsä takia korvattavissa helposti. 
 
 
 
 ### Tiedostot  
 
-Sovellus tallentaa tiedot sql-tietokantaan (users.db), jossa on kaksi tietokantataulua: UserAccount ja Activity: 
+Sovellus tallentaa tiedot sql-tietokantaan (users.db), jossa on kaksi tietokantataulua:  _UserAccount_ ja _Activity_: 
 <img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/Databasediagram.jpeg" width="700">
 
 ### Päätoiminnallisuudet  
