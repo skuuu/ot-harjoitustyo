@@ -18,4 +18,5 @@
 |6.12.|   3  | edited userInterface based on feedback | 
 |9.12.|   3  | javadoc | 
 |10.12.|  3   | arkkitehtuurikuvaus.md | 
-| yht   | 60   | | 
+|11.12.|  6   | arkkitehtuurikuvaus.md links, fixed barchart changing colours, fixed barchart xAxis order | 
+| yht   | 63   | | 
