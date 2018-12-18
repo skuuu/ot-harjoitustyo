@@ -19,7 +19,7 @@ Asetukset-näkymässä (SettingsScene) käyttäjä voi mm. muokata päiväkohtai
 ## Perusversion tarjoama toiminnallisuus  
 ### Ennen kirjautumista  
 - käyttäjä voi luoda järjestelmään käyttäjätunnuksen
-  - käyttäjätunnuksen täytyy olla uniikki
+  - käyttäjätunnuksen täytyy olla uniikki, sisältää 2-30 kirjainta (a-z, A-Z) ja/tai numeroa (0-9).
 - käyttäjä voi kirjautua järjestelmään
   - kirjautuminen onnistuu syötettäessä olemassaoleva käyttäjätunnus kirjautumislomakkeelle
   - jos käyttäjää ei löydy, ilmoittaa järjestelmä tästä
