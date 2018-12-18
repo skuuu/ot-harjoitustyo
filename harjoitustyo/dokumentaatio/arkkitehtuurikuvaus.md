@@ -72,7 +72,7 @@ Sovelluksen toimintaperiaate on samankaltainen myös muille toiminnoille. Graafi
 
 
 ### käyttöliittymä  
-Graafinen käyttöliittymä sisältää paljon parametrillisia metodeja enkä oikein tiennyt, miten ne voisi korvata fiksusti. Konstruktori ei olisi hirveästi tätä vaivaa vähentänyt.
+Käyttäjän muuttaessa aikaväliä pylväskaavion pylväiden värit vaihtuvat. 
 
 
 
