@@ -4,7 +4,7 @@
 Lataa tiedosto [saastopossu.jar](https://github.com/skuuu/ot-harjoitustyo/releases/tag/Saastopossuv1.2) 
 
 ## Konfigurointi
-Ohjelman onnistunut käynnistys edellyttää, että .jar -tiedosto ja users.db -tiedosto on asennettu samaan kansioon ko nimillä. (Molemmat erillisinä tiedostoina releasessa). 
+Sovelluksen onnistunut käynnistys ja testaus edellyttää, että sovelluksen generoimat .jar -tiedosto, piggyBankDatabase.db ja piggyBankTestDatabase.db löytyvät samasta kansiosta. 
 
 ## Ohjelman käynnistäminen
 
@@ -22,7 +22,7 @@ Kirjautuminen onnistuu kirjoittamalla olemassaoleva käyttäjätunnus syötekent
 ## Uuden käyttäjän luominen
 
 Kirjautumisnäkymästä on mahdollista siirtyä uuden käyttäjän luomisnäkymään panikkeella _create new user account_.
-Uusi käyttäjä luodaan syöttämällä käyttäjätunnus syötekenttään ja klikkaamalla painiketta _sign in_. KÄyttäjätunnus voi olla 3-20 merkkiä pitkä, ja sisältää kirjaimia A_Z, a-z ja numeroita 0-9. 
+Uusi käyttäjä luodaan syöttämällä käyttäjätunnus syötekenttään ja klikkaamalla painiketta _Confirm_. Käyttäjätunnus voi olla 3-20 merkkiä pitkä, ja sisältää kirjaimia A_Z, a-z ja numeroita 0-9. 
 
 Jos käyttäjän luominen onnistuu, palataan kirjautumisnäkymään.
 
@@ -34,7 +34,7 @@ Näkymä mahdollistaa kulujen näyttämisen graafisesti. Oletuksena sovellus nä
 ## Kulujen lisääminen  
 Kulun voi lisätä kirjoittamalla summan (eurot, sentit) niille merkattuihin tekstikenttiin. Eurokenttä ei saa olla tyhjä, ja senttikentän syötteen tulee olla max. kahden numeron mittainen. Mikäli senttikenttä on tyhjä, täydentää ohjelma sen automaattisesti nollaksi. Kulu lisätään valitsemalla kululle päivämäärä DatePicker-valikosta sekä kategoria _chooose category_ -valikosta. 
 
-Uuden kategorian voi määritellä _create new_ -valinnalla, jolloin kategorian nimentään avautuu tekstikenttä. Kategorian nimentä onnistuu samojen rajoitteiden mukaan kuin käyttäjätunnuksenkin. Kategorioita voi olla max. 7.
+Uuden kategorian voi määritellä _create new_ -valinnalla, jolloin kategorian nimentään avautuu tekstikenttä. Kategorian nimentä onnistuu samojen rajoitteiden mukaan kuin käyttäjätunnuksenkin. Kategorioita voi olla max. 7 ja luotavan kategorian nimen on oltava uniikki.
 Kulu tallettuu klikkaamalla painiketta _Add Expense_. 
 
 
