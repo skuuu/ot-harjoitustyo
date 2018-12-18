@@ -4,8 +4,6 @@
 
 Sovelluksen avulla käyttäjä voi tarkastella budjettiaan graafisena esityksenä haluamallaan aikavälillä, lisätä menoja valitsemilleen päiville, määritellä menoille kategorioita ja nähdä budjettiin liittyviä laskelmia. Sovellus vaatii kirjautumisen ja tallentaa tiedot käyttäjäkohtaisesti tietokantaan.
 
-Tällä hetkellä kaipaisin apua seuraavissa asioissa: 
-- miten graafisesta käyttöliittymästä vastaavan UserInterface -luokan voisi toteuttaa siistimmin? 
 
 
 
@@ -29,13 +27,13 @@ Tällä hetkellä kaipaisin apua seuraavissa asioissa:
 
 ### Testaus
 
-Testit suoritetaan komennolla
+Testien suorittaminen:  
 
 ```
 mvn test
 ```
 
-Testikattavuusraportti luodaan komennolla
+Testikattavuusraportin luominen:  
 
 ```
 mvn jacoco:report
@@ -45,13 +43,13 @@ Kattavuusraporttia voi tarkastella avaamalla selaimella tiedosto _target/site/ja
 
 ### Suoritettavan jarin generointi
 
-Komento
+.jar -tiedoston generointi:  
 
 ```
 mvn package
 ```
 
-generoi hakemistoon _target_ suoritettavan jar-tiedoston _Saastopossu-1.0-SNAPSHOT.jar_
+komento generoi hakemistoon _target_ suoritettavan jar-tiedoston _Saastopossu-1.0-SNAPSHOT.jar_
 
 ### JavaDoc
 
@@ -63,9 +61,9 @@ mvn javadoc:javadoc
 
 JavaDocia voi tarkastella avaamalla selaimella tiedosto _target/site/apidocs/index.html_
 
-### Checkstyle
+### Checkstyle  
 
-Tiedostoon [checkstyle.xml](https://github.com/mluukkai/OtmTodoApp/blob/master/checkstyle.xml) määrittelemät tarkistukset suoritetaan komennolla
+Koodin Checkstyle-laadun voi tarkistaa komennolla:
 
 ```
  mvn jxr:jxr checkstyle:checkstyle
