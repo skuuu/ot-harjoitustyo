@@ -1,4 +1,4 @@
-# työaikakirjanpito
+# Working Hours
 
 | date | time | what did I do  |
 | :----:|:-----| :-----|
@@ -19,4 +19,7 @@
 |9.12.|   3  | javadoc | 
 |10.12.|  3   | arkkitehtuurikuvaus.md | 
 |11.12.|  6   | arkkitehtuurikuvaus.md links, fixed barchart changing colours, fixed barchart xAxis order | 
-| yht   | 63   | | 
+|13.12.|  3   | refactoring, javadoc| 
+|15.12.|  2   | tests | 
+|18.12.|  3   | spesific input error messages |
+| yht   | 71   | | 
