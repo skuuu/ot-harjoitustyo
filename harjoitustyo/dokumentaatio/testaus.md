@@ -1,31 +1,41 @@
 # Testausdokumentti
 
-Ohjelmaa on testattu sekä automatisoiduin yksikkö- ja integraatiotestein JUnitilla sekä manuaalisesti tapahtunein järjestelmätason testein.
+Sovellusta on testattu Junitin avulla. Luodut testit sisältävät sekä yksikkö- että integraatiotestjä ja testaavat laajasti sovelluksen toimintaa. Lisäksi sovellusta on on testattu manuaalisesti ja keräämällä käyttäjäkokemuksista palautetta.
 
 ## Yksikkö- ja integraatiotestaus
 
-### sovelluslogiikka
+Sovelluksen testaus suoritetaan erillisessä testitieokannassa. Jokaista luokkaa testataan erillisellä testiluokalla. Testiluokat: 
+[ActivityTest](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/test/java/domainTests/ActivityTest.java)
+[UserAccountTest](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/test/java/domainTests/UserAccountTest.java)
+[ActivityDaoTest](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/test/java/daoTests/ActivityDaoTest.java)
+[UserAccountDaoTest](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/test/java/daoTests/UserAccountDaoTest.java)
+[AnalysisTest](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/test/java/logicTests/AnalysisTest.java)
+[ConverterTest](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/test/java/logicTests/ConverterTest.java)
+[LogicTest](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/test/java/logicTests/LogicTest.java)
 
-### DAO-luokat
-
-Dao-luokat testataan tietokannassa. 
 
 ### Testauskattavuus
 
-Sovelluksen tämänhetkinen testauksen rivikattavuus on 97% ja haarautumakattavuus 89%  
+Sovelluksen tämänhetkinen testauksen rivikattavuus on 93% ja haarautumakattavuus 98%  
 
-<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/Screenshot_2018-12-04%20Saastopossu.png" width="800">
+<img src="" width="800">
 
+Testit eivät kata tilanteita, joissa tarvittavia tiedostoja ei löydy.
 
 ## Järjestelmätestaus
 
 Sovelluksen järjestelmätestaus on suoritettu manuaalisesti.
 
-### Asennus ja kanfigurointi
+### Asennus ja konfigurointi  
 
+Sovellusta on testattu sekä tilanteissa, joissa tarvittavat .db-tiedostot ovat olleet olemassa ja joissa niitä ei ole ollut jolloin ohjelma on luonut ne itse.
 
-### Toiminnallisuudet
+### Toiminnallisuudet  
+
+Sovellus on testattu laajasti myös virheellisten syötteiden osalta ja sovellus antaa käyttäjälle palautetta virheen laadusta virheviestin muodossa. 
 
 
 ## Sovellukseen jääneet laatuongelmat
 
+Sovellus ei anna virheviestiä, mikäli tarvittavia -db -tiedostoja ei löydy. 
+Sovellus ei testaa yksittäisiä SQLExceptioneita.
