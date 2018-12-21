@@ -31,9 +31,15 @@ Jos käyttäjän luominen onnistuu, palataan kirjautumisnäkymään.
 Onnistuneen kirjautumisen myötä siirrytään käyttäjän kulut näyttävään päänäkymään. 
 Näkymä mahdollistaa kulujen näyttämisen graafisesti. Oletuksena sovellus näyttää kulut kuukauden ajalta. Aikavälin voi määritellä valitsemalla päivät DatePicker-valikosta. 
 
-Pylväsidagrammissa näkyvät lisätyt kulut päiväkohtaisesti ja kategorioittain. Yksittäisen pylvään tietoja pystyy tarkastelemaan viemällä hiiren pylvään päälle, jolloin käyttäjälle näytetään ko pylvään summa euroina. Klikkaamalla pylvästä avautuu ikkuna, jossa käyttäjä näkee pylvään kulut (yksittäisen kulun summa euroina sekä lisätiedot). 
-Käyttäjä voi halutessaan poistaa kulun näppäimellä _delete_.
+Pylväsidagrammissa näkyvät lisätyt kulut päiväkohtaisesti ja kategorioittain. Yksittäisen pylvään tietoja pystyy tarkastelemaan viemällä hiiren pylvään päälle, jolloin käyttäjälle näytetään ko pylvään summa euroina.
 
+Klikkaamalla pylvästä avautuu ikkuna, jossa käyttäjä näkee pylvään kulut (yksittäisen kulun summa euroina sekä lisätiedot). 
+Käyttäjä voi halutessaan poistaa kulun näppäimellä _delete_:
+  
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/ScreenshotExpenseScene.jpg" width="700">
+
+
+  
 ## Kulujen lisääminen  
 Kulun voi lisätä kirjoittamalla summan (eurot, sentit) niille merkattuihin tekstikenttiin. Eurokenttä ei saa olla tyhjä, ja senttikentän syötteen tulee olla max. kahden numeron mittainen. Mikäli senttikenttä on tyhjä, täydentää ohjelma sen automaattisesti nollaksi. Kulu lisätään valitsemalla kululle päivämäärä DatePicker-valikosta sekä kategoria _chooose category_ -valikosta. 
 
