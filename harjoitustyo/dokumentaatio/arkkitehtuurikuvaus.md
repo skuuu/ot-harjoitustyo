@@ -44,7 +44,7 @@ Luokat noudattavat Data Access Object -suunnittelumallia. Luokat on eristetty ra
 ### Tiedostot  
 
 Sovellus tallentaa tiedot sql-tietokantaan (saastopossuDatabase.db), jossa on kaksi tietokantataulua:  _UserAccount_ ja _Activity_: 
-<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/Databasediagram.jpeg" width="700">
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/DatabaseDiagram21.12.jpeg" width="700">
 
 ### Päätoiminnallisuudet  
 
