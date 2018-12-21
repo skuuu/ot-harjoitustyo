@@ -6,11 +6,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 import saastopossuapp.domain.Activity;
 
 /**
@@ -18,24 +17,31 @@ import saastopossuapp.domain.Activity;
  */
 public class ActivityDao implements ActivityDaoInterface {
     private Database db;
+    private String username;
     
-    public ActivityDao(Database db) {
+    public ActivityDao(Database db, String username) {
         this.db = db;
-        
+        this.username = username;
     }
-
-    public Activity findOne(Integer key) throws SQLException {
+    
+    
+    /**
+     * Method finds Activity based on activityId
+     * @param activityId - Acitivitys Id
+     * @return Activity or null, if Activity doesn't exist.
+     * @throws java.sql.SQLException if fetching from database fails
+     */
+    public Activity findOne(Integer activityId) throws SQLException {
         Connection con = db.getConnection();
         PreparedStatement stmt = con.prepareStatement("SELECT * FROM Activity WHERE ActivityId=?");
-        stmt.setInt(1, key);
-        ResultSet rs = stmt.executeQuery();
+        stmt.setInt(1, activityId);
         
+        ResultSet rs = stmt.executeQuery();
         boolean hasOne = rs.next();
         if (!hasOne) {
             return null;
         }
-
-        Activity activity = new Activity(rs.getString("activitysUser").trim(), rs.getInt("cents"), rs.getDate("date"), rs.getString("category").trim());
+        Activity activity = new Activity(rs.getString("activitysUser").trim(), rs.getInt("cents"), rs.getDate("date"), rs.getString("category").trim(), rs.getString("description"));
         activity.setActivityId(rs.getInt("activityId"));
 
         stmt.close();
@@ -44,19 +50,23 @@ public class ActivityDao implements ActivityDaoInterface {
         return activity;
     }
     
+    /**
+     * Method finds all Activities from database
+     * @return list of Activities
+     * @throws java.sql.SQLException if fetching from database fails
+     */
     @Override
     public List<Activity> findAll() throws SQLException {
         Connection con = db.getConnection();
-        PreparedStatement stmt = con.prepareStatement("SELECT activitysuser, cents, date, category, activityid FROM Activity");
-        
-        ResultSet rs = stmt.executeQuery();
+        PreparedStatement stmt = con.prepareStatement("SELECT activitysuser, cents, date, category, activityid, description FROM Activity");
         List<Activity> activities = new ArrayList<>();
         
+        ResultSet rs = stmt.executeQuery();
         if (!rs.next()) {
             return activities; 
         } else {
             do {
-                Activity activity = new Activity(rs.getString("activitysuser").trim(), rs.getInt("cents"), rs.getDate("date"), rs.getString("category").trim());
+                Activity activity = new Activity(rs.getString("activitysuser").trim(), rs.getInt("cents"), rs.getDate("date"), rs.getString("category").trim(), rs.getString("description"));
                 activity.setActivityId(rs.getInt("activityid"));
                 activities.add(activity);
             }
@@ -66,10 +76,15 @@ public class ActivityDao implements ActivityDaoInterface {
         rs.close();
         con.close();
         return activities;
-        
     }
+    
+    /**
+     * Method deletes all Activities related to username
+     * @param username - username whose Activities are being deleted
+     * @throws java.sql.SQLException if deleting from database fails
+     */
     @Override
-    public void delete(String username) throws SQLException {
+    public void deleteAll(String username) throws SQLException {
         Connection conn = db.getConnection();
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM Activity WHERE activitysuser = (?)");
 
@@ -77,86 +92,88 @@ public class ActivityDao implements ActivityDaoInterface {
         stmt.executeUpdate();
         stmt.close();
         conn.close(); 
-
-    }
-    @Override
-    public Activity saveOrUpdate(Activity lisattava, String username) throws SQLException {
-        List<Activity> all = findAllByUser(username);
-        for (int i = 0; i < all.size(); i++) {
-            if (all.get(i).getDate().equals(lisattava.getDate()) && all.get(i).getCategory().trim().equals(lisattava.getCategory().trim())) {
-                return update(lisattava, all.get(i));
-            }
-        }
-        return save(lisattava);
     }
     
-    public Activity save(Activity lisattava) throws SQLException {
-        int id = (findAll().size() + 1);
+    /**
+     * Method deletes one Activity by its activityId.
+     * @param activityid - Activity's activityId
+     * @throws java.sql.SQLException if deleting from database fails
+     */
+    @Override
+    public void deleteOne(Integer activityid) throws SQLException {
         Connection conn = db.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Activity (activityid, activitysuser, cents, date, category) VALUES (?,?,?,?,?)");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Activity WHERE activityid = (?)");
 
-        stmt.setInt(1, id);
-        stmt.setString(2, lisattava.getActivitysUser());
-        stmt.setInt(3, lisattava.getCents());
-        stmt.setDate(4, lisattava.getDate()); 
-        stmt.setString(5, lisattava.getCategory());
+        stmt.setInt(1, activityid);
+        stmt.executeUpdate();
+        stmt.close();
+        conn.close(); 
+    }
+    
+    /**
+     * Method saves Activity
+     * @param activityToBeSaved - Activity that will be saved
+     * @return activityToBeSaved
+     * @throws java.sql.SQLException if saving to database fails
+     */
+    @Override
+    public Activity save(Activity activityToBeSaved) throws SQLException {
+        Connection conn = db.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Activity (activitysuser, cents, date, category, description) VALUES (?,?,?,?,?)");
+        stmt.setString(1, activityToBeSaved.getActivitysUser());
+        stmt.setInt(2, activityToBeSaved.getCents());
+        stmt.setDate(3, activityToBeSaved.getDate()); 
+        stmt.setString(4, activityToBeSaved.getCategory());
+        stmt.setString(5, activityToBeSaved.getDescription());
+        
         stmt.executeUpdate();
         stmt.close();
         conn.close();
-        return lisattava;
+        return activityToBeSaved;
     }
-
+    
+    /**
+     * Method finds all Activities by username
+     * @param username - username of the userAccount related to Activity
+     * @return ArrayList of Activities
+     * @throws java.sql.SQLException if fetching from database fails
+     */
     @Override
-    public ArrayList<Activity> findAllByUser(String username) throws SQLException {
+    public ArrayList<Activity> findAllByUsername(String username) throws SQLException {
         Connection con = db.getConnection();
-        PreparedStatement stmt = con.prepareStatement("SELECT * FROM Activity WHERE activitysuser = (?)");
+        PreparedStatement stmt = con.prepareStatement("SELECT * FROM activity WHERE activitysuser = (?)");
         stmt.setString(1, username);
+        ArrayList<Activity> activities = new ArrayList<>();
         
         ResultSet rs = stmt.executeQuery();
-        ArrayList<Activity> activities = new ArrayList<>();
-
         while (rs.next()) {
-            Activity activity = new Activity(rs.getString("activitysUser").trim(), rs.getInt("cents"), rs.getDate("date"), rs.getString("category").trim());
+            Activity activity = new Activity(rs.getString("activitysUser").trim(), rs.getInt("cents"), rs.getDate("date"), rs.getString("category").trim(), rs.getString("description").trim());
             activity.setActivityId(rs.getInt("activityId"));
             activities.add(activity);
         }
         stmt.close();
         rs.close();
         con.close();
+        Collections.sort(activities); 
         return activities;
-        
-        
     }
+    
+    /**
+     * Method finds all Activities by username
+     * @param fromDate - Date from expenses are being fetch
+     * @param untilDate - Date until expenses are being fetch
+     * @return ArrayList of Expenses
+     * @throws java.sql.SQLException if fetching from database fails
+     */
     @Override
-    public Integer findSumOfExpensesByDate(Date after, Date before, String passwordField) throws SQLException {
-        Connection con = db.getConnection();
-        PreparedStatement stmt = con.prepareStatement("SELECT SUM(cents) AS cents FROM activity WHERE date >= (?) AND date <= (?) AND activitysuser = (?)");
-        
-        stmt.setDate(1, after);
-        stmt.setDate(2, before);
-        stmt.setString(3, passwordField);
-        
-        int cents = 0;
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            cents = rs.getInt("cents");
-        }
-        stmt.close();
-        rs.close();
-        con.close();
-        return cents;
-  
-    }
-    @Override
-    public ArrayList<Integer> findExpensesByDate(LocalDate after, LocalDate before, String passwordField) throws SQLException {
+    public ArrayList<Integer> findExpensesForTheChosenTimePeriod(Date fromDate, Date untilDate) throws SQLException {
         Connection con = db.getConnection();
         PreparedStatement stmt = con.prepareStatement("SELECT cents AS cents FROM activity WHERE date >= (?) AND date <= (?) AND activitysuser = (?)");
-        
-        stmt.setDate(1, localDateToDate(after));
-        stmt.setDate(2, localDateToDate(before));
-        stmt.setString(3, passwordField);
-        
+        stmt.setDate(1, fromDate);
+        stmt.setDate(2, untilDate);
+        stmt.setString(3, username);
         ArrayList<Integer> centsList = new ArrayList<>();
+        
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             centsList.add(rs.getInt("cents"));
@@ -165,33 +182,61 @@ public class ActivityDao implements ActivityDaoInterface {
         rs.close();
         con.close();
         return centsList;
-  
     }
-    public Date localDateToDate(LocalDate date) {
-        return java.sql.Date.valueOf(date);
-    }
+    
+    /**
+     * Method finds all Activities by username and date, and puts them in a list 
+     * so that Activities with the same date and category are united.
+     * @param fromDate - Date from expenses are being fetch
+     * @param untilDate - Date until expenses are being fetch
+     * @param username - username of the user whose activities are being fetch
+     * @return ArrayList of Activities
+     * @throws java.sql.SQLException if fetching from database fails
+     */
     @Override
-    public Activity update(Activity existingActivity, Activity newActivity) throws SQLException {
-        Connection con = db.getConnection();
-        PreparedStatement stmt = con.prepareStatement("UPDATE Activity SET cents = ? WHERE activityid = ?");
-        stmt.setInt(1, newActivity.getCents() + existingActivity.getCents());
-        stmt.setInt(2, newActivity.getActivityId());
-
-        stmt.executeUpdate();
-        stmt.close();
-        con.close();
-        return newActivity;
+    public ArrayList<Activity> getDailyActivities(Date fromDate, Date untilDate, String username) throws SQLException {
+        this.username = username;
+        ArrayList<Activity> activities = findAllByUsername(username);
+        ArrayList<Activity> newlist = new ArrayList();
         
+        for (int i = 0; i < activities.size(); i++) {
+            Activity a = activities.get(i);
+            if (!newlist.contains(a)) {
+                newlist.add(a);
+            } else {
+                for (int e = 0; e < newlist.size(); e++) {
+                    Activity b = newlist.get(e);
+                    if (a.equals(b)) {
+                        b.setCents(a.getCents() + b.getCents());
+                    }
+                }
+            }
+        }
+        Collections.sort(newlist);
+        return newlist;
     }
+    
+    /**
+     * Method finds all Activities by category, and puts them in a map 
+     * where key is the category and value is list of activities from that category. 
+     * Activities with the same date and category are united.
+     * @param fromDate - Date from expenses are being fetch
+     * @param untilDate - Date until expenses are being fetch
+     * @param username - username of the user whose activities are being fetch
+     * @return TreeMap of Activities by category
+     * @throws java.sql.SQLException if fetching from database fails
+     */
     @Override
-    public HashMap<String, ArrayList<Activity>> findAllByCategory(Date after, Date before, String username) throws SQLException {
-        HashMap<String, ArrayList<Activity>> map = new HashMap<>();
-        ArrayList<Activity> activities = findAllByUser(username);
-        if (activities.isEmpty()) {
+    public TreeMap<String, ArrayList<Activity>> findAllByCategory(Date fromDate, Date untilDate, String username) throws SQLException {
+        this.username = username;
+        TreeMap<String, ArrayList<Activity>> map = new TreeMap<>();
+        ArrayList<Activity> expensesbyDate = getDailyActivities(fromDate, untilDate, username);
+        
+        if (expensesbyDate.isEmpty()) {
             return map;
         }
-        for (Activity a: activities) {
-            if ((a.getDate().after(after) | a.getDate().equals(after)) && (a.getDate().before(before) | a.getDate().equals(before))) {
+        for (Activity a: expensesbyDate) {
+            if ((a.getDate().after(fromDate) | a.getDate().equals(fromDate)) && (a.getDate().before(untilDate) | a.getDate().equals(untilDate))) {
                 if (map.keySet().contains(a.getCategory())) { 
                     map.get(a.getCategory()).add(a);
                 } else if (!map.keySet().contains(a.getCategory())) {
@@ -200,13 +245,6 @@ public class ActivityDao implements ActivityDaoInterface {
                     map.get(a.getCategory()).add(a);                   
                 }
             }
-        }
-        return mapWithArrangedValues(map);
-    }
-    
-    public HashMap<String, ArrayList<Activity>> mapWithArrangedValues(HashMap<String, ArrayList<Activity>> map) {
-        for (ArrayList<Activity> a : map.values()) {
-            Collections.sort(a);
         }
         return map;
     }

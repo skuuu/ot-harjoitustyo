@@ -1,42 +1,38 @@
 package daoTests;
 
-
-
 import java.sql.SQLException;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import saastopossuapp.dao.UserAccountDao;
 import saastopossuapp.dao.Database;
 import saastopossuapp.domain.UserAccount;
 
-
+/**
+ * Class is responsible for testing class UserAccountDao
+ */
 public class UserAccountDaoTest {
     private Database db;
     private static UserAccountDao ud;
     private UserAccount testUser;
     
-    public UserAccountDaoTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() throws SQLException {
-        ud.delete("tester");
-    }
-    
+    /**
+     * Method creates setup for the tests. 
+     * One UserAccount (testUser) will be added to testdatabase.
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
+     */
     @Before
     public void setUp() throws ClassNotFoundException, SQLException {
         db = new Database();
+        db.changeDatabase("jdbc:sqlite:testdatabase.db");
+        db.init();
         ud = new UserAccountDao(db);
         testUser = new UserAccount("tester");
         testUser.setUserId(ud.findAll().size()+1);
+        
+        ud.saveOrUpdate(testUser);
     }
     
     @After
@@ -45,29 +41,25 @@ public class UserAccountDaoTest {
     }
     
     @Test
-    public void saveWorks() throws SQLException {
+    public void save_Works() throws SQLException {
+        ud.delete("tester");
         assertEquals(testUser, ud.saveOrUpdate(testUser)); 
     }
 
     @Test
-    public void findOneworksWhenUsernameExists() throws SQLException {
-        ud.saveOrUpdate(testUser);
+    public void findOne_Works_IfUsernameExists() throws SQLException {
         assertEquals(testUser.getUsername(), ud.findOne("tester").getUsername());
     }
     @Test
-    public void findOneworksWhenUsernameDoesntExist() throws SQLException {
-        ud.saveOrUpdate(testUser);
+    public void findOne_ReturnsNull_IfUsernameDoesntExist() throws SQLException {
         assertEquals(null, ud.findOne("notex1212"));
     }
     @Test
-    public void findAllWorks() throws SQLException {
-        int koko = ud.findAll().size();
-        ud.saveOrUpdate(testUser);
-        assertEquals(koko+1, ud.findAll().size()); 
+    public void findAll_ReturnsCorrectSizedList() throws SQLException {
+        assertEquals(1, ud.findAll().size()); 
     }
     @Test
-    public void updateBudgetWorks() throws SQLException {
-        ud.saveOrUpdate(testUser);
+    public void updateBudget_UpdatesBudget() throws SQLException {
         ud.updateBudget("tester", 20);
         assertEquals(20, ud.findOne("tester").getUserBudget()); 
     }

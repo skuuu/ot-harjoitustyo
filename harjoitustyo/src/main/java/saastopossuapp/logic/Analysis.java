@@ -17,51 +17,27 @@ import saastopossuapp.dao.UserAccountDaoInterface;
  */
 public class Analysis {
     private final ActivityDaoInterface activityDao;
-    private final UserAccountDaoInterface userAccountDao;
     private final Converter conv;
-    private DescriptiveStatistics stats = new DescriptiveStatistics();
-    private String username;
-    private LocalDate from;
-    private LocalDate to;
-    private Integer days;
+    private DescriptiveStatistics stats;
+    private final Integer days;
     private Integer budget;
     
     
-    
-    public Analysis(ActivityDaoInterface activityDao, UserAccountDaoInterface userAccountDao) {
+    public Analysis(ActivityDaoInterface activityDao, UserAccountDaoInterface userAccountDao, LocalDate fromDate, LocalDate untilDate, String username) throws SQLException {
         this.conv = new Converter();
         this.activityDao = activityDao;
-        this.userAccountDao = userAccountDao;
         this.stats = new DescriptiveStatistics();
-        this.username = "o";
-        this.from = null;
-        this.to = null;
-        this.days = 0;
-        this.budget = 0;
-        
-        
-    }
-    
-    public void setList(LocalDate from, LocalDate to, String username) throws SQLException {
         stats.clear();
-        for (Integer i: activityDao.findExpensesByDate(from, to, username)) {
-            stats.addValue(i);
+        this.budget = userAccountDao.findOne(username).getUserBudget();
+        for (Integer expense: activityDao.findExpensesForTheChosenTimePeriod(conv.localDateToDate(fromDate), conv.localDateToDate(untilDate))) {
+            stats.addValue(expense);
         }
-        this.username = username;
-        this.from = from;
-        this.to = to;
-        
-        this.days = Math.abs((int) from.toEpochDay() - 1 - (int) to.toEpochDay());
-        try {
-            this.budget = userAccountDao.findOne(username).getUserBudget();
-        } catch (SQLException ex) {
-            Logger.getLogger(Analysis.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.days = Math.abs((int) fromDate.toEpochDay() - 1 - (int) untilDate.toEpochDay());
     }
-    
+   
     /**
      * Method counts how much (percentage) user's expenses are from the budget in a chosen time period
-     * @return  percentage from budget
+     * @return percentage from budget formatted to #0.00
      */
     public double countExpensePercentageFromBudget() {
         return formatDecimals(stats.getSum() / (budget * days) * 100);
@@ -69,68 +45,75 @@ public class Analysis {
     
     /**
      * Method counts how much (percentage) user's expenses are from the budget in a chosen time period
-     * @return  percentage from budget in euros
+     * @return percentage from budget in euros formatted to #0.00
      */
     public double countBudgetForChosenPeriod() {
-        return formatDecimals((this.days * this.budget) / 100.0);
+        return conv.toEuros(days * budget);
     }
     
     /**
      * Method counts what is the average expense in a day in a chosen time period
-     * @return  average in euros
+     * @return average expense in euros formatted to #0.00
      */
     public double countAverage() {
-        if (stats.getN() > 0) {
-            return formatDecimals(stats.getMean() / 100.0); 
+        if (this.stats.getN() > 0) {
+            return conv.toEuros(stats.getMean()); 
         }
         return 0;
     }
     
     /**
      * Method counts what is the average expense in a day in a chosen time period
-     * @return  average in euros
+     * @return average in euros formatted to #0.00
      */
-    public int sumOfExpensesByDate() {  
-        return (int) stats.getSum();
+    public double sumOfExpensesByDate() {  
+        return conv.toEuros(stats.getSum());
 
     }
     
     /**
      * Method counts the expenses on a chosen day from all categories
-     * @param   strDate    date of type String
-     * @return  sum of expenses in a chosen day
-     * @throws java.sql.SQLException fetch from database non-successfull
+     * @param strDate - date of type String
+     * @return sum of expenses in a chosen day formatted to #0.00
+     * @throws java.sql.SQLException if fetch from database fails
      */
-    public int expensesInADay(String strDate) throws SQLException {   //muokattu
-        int inADay = 0;
-        for (Integer cents: activityDao.findExpensesByDate(conv.stringToLocalDate(strDate), conv.stringToLocalDate(strDate), username)) {
+    public double expensesInADay(String strDate) throws SQLException { 
+        double inADay = 0;
+        for (Integer cents: activityDao.findExpensesForTheChosenTimePeriod(conv.stringToDate(strDate), conv.stringToDate(strDate))) {
             inADay += cents;
         }
-        activityDao.findExpensesByDate(conv.stringToLocalDate(strDate), conv.stringToLocalDate(strDate), username);
-        
-        return inADay;
+        return conv.toEuros(inADay);
     }
     
     /**
      * Method formats decimals to match "#0.00"
-     * @param   formatThis double to format
-     * @return  formatted Double
+     * @param formatThis - double to format
+     * @return Double in formatted to #0.00
      */
     public double formatDecimals(double formatThis) {
         DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.getDefault());
         otherSymbols.setDecimalSeparator('.');
         DecimalFormat formatter = new DecimalFormat("#0.00", otherSymbols); 
         return Double.parseDouble(formatter.format(formatThis));
-        
     }
     
     /**
-     * Method returns budget
-     * @return  budget
+     * Method returns budget in euros
+     * @return budget in euros formatted to #0.00
      */
-    public int getBudget() {
-        return this.budget;
+    public double getBudget() {
+        return conv.toEuros(budget);
     }
     
+    /**
+     * Method counts savings from budget for a chosen time period
+     * @return savings in euros
+     */
+    public double countSavings() {
+        if (countBudgetForChosenPeriod() - sumOfExpensesByDate() < 0) {
+            return 0.0;
+        }
+        return countBudgetForChosenPeriod() - sumOfExpensesByDate();
+    }
 }
 

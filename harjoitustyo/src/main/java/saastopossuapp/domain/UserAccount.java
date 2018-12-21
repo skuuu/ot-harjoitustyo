@@ -1,7 +1,7 @@
 package saastopossuapp.domain;
 
 /**
- * Class defines Users
+ * Class defines users
  */
 public class UserAccount {
 
