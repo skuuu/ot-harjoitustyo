@@ -2,7 +2,7 @@
 
 
 
-Sovelluksen avulla käyttäjä voi tarkastella budjettiaan graafisena esityksenä haluamallaan aikavälillä, lisätä menoja valitsemilleen päiville, määritellä menoille kategorioita ja nähdä budjettiin liittyviä laskelmia. Sovellus vaatii kirjautumisen ja tallentaa tiedot käyttäjäkohtaisesti tietokantaan.
+Sovelluksen avulla käyttäjä voi tarkastella budjettiaan graafisena esityksenä haluamallaan aikavälillä, lisätä menoja valitsemilleen päiville, poistaa menoja, määritellä menoille kategorioita ja lisätietoja ja nähdä budjettiin liittyviä laskelmia. Sovellus vaatii kirjautumisen ja tallentaa tiedot käyttäjäkohtaisesti tietokantaan.
 
 
 
