@@ -1,7 +1,7 @@
 # Käyttöohje
 
 
-Lataa tiedosto [saastopossu.jar](https://github.com/skuuu/ot-harjoitustyo/releases/tag/Saastopossuv1.2) 
+Lataa tiedosto [saastopossu.jar](https://github.com/skuuu/ot-harjoitustyo/releases/tag/Saastopossuv1.3) 
 
 ## Konfigurointi
 Sovelluksen onnistunut käynnistys ja testaus edellyttää, että sovelluksen generoimat .jar -tiedosto, piggyBankDatabase.db ja piggyBankTestDatabase.db löytyvät samasta kansiosta. 
