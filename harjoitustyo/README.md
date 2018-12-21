@@ -9,7 +9,7 @@ Sovelluksen avulla käyttäjä voi tarkastella budjettiaan graafisena esityksen�
 
 ## Dokumentaatio
 
-[Käyttöohje](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/dokumentaatio/KayttoOhje.md)
+[Käyttöohje](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/dokumentaatio/kayttoohje.md)
 
 [Vaatimusmäärittely](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/dokumentaatio/vaatimusmaarittely.md)
 
