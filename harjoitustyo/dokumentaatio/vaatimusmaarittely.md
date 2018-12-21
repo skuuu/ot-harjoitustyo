@@ -9,12 +9,13 @@ Käyttäjä lisää menonsa ja budjettinsa sovellukseen, ja sovellus laskee päi
 Sovelluksella voi olla monta käyttäjää.
 
 ## Käyttöliittymäluonnos  
-Käyttöliittymä koostuu neljästä eri näkymästä. 
+Käyttöliittymä koostuu viidestä eri näkymästä. 
 Kirjautumisnäkymässä (passwordScene) käyttäjä kirjautuu sisään tai siirtyy näkymään (createUserScene) jossa luo uuden käyttäjätunnuksen. 
 Päänäkymässä (startScene) käyttäjä näkee kuukauden ajalta menonsa. Käyttäjä voi pyytää raporttia haluamaltaan aikaväliltä tai lisätä menon. 
 Asetukset-näkymässä (SettingsScene) käyttäjä voi mm. muokata päiväkohtaista budjettiaan. 
+Klikkaamalla pylväskaavion pylväitä avautuu uusi ikkuna ExpenseScene-näkymällä, jossa yksittäisen päivän kategorian menoja voi tarkastella ja poistaa.
 
-<img src= "https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/IMG_20181113_184739.jpg" width="800">
+<img src= "https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/vaatimusmaarittely21.12..jpg" width="800">
 
 ## Perusversion tarjoama toiminnallisuus  
 ### Ennen kirjautumista  
@@ -29,6 +30,7 @@ Asetukset-näkymässä (SettingsScene) käyttäjä voi mm. muokata päiväkohtai
 - Käyttäjä voi valita haluamansa aikavälin tarkasteluun
 - Käyttäjä voi lisätä menon (summa, kategoria, pvm)
 - Käyttäjä voi lisätä menon nimeämällään uudella kategorialla
+- Käyttäjä voi tarkastella yksittäisen päivänja kategorian (pylvään) kuluja ja poistaa niitä
 - Käyttäjä voi siirtyä Settings-näkymään määrittelemään budjettinsa
 - Käyttäjä voi kirjautua ulos
 
@@ -36,5 +38,5 @@ Asetukset-näkymässä (SettingsScene) käyttäjä voi mm. muokata päiväkohtai
 Perusversion jälkeen järjestelmää täydennetään ajan salliessa esim. seuraavilla toiminnallisuuksilla:  
 :ballot_box_with_check: Käyttäjä voi lisätä menoja kategorioittain ja määritellä uuden kategorian    
 :black_square_button: Käyttäjätunnuksen vaihtaminen/poistaminen  
-:black_square_button:	Menon poistaminen  
+:ballot_box_with_check:	Menon poistaminen  
 :black_square_button: Sovelluksen ulkoasun tyylittely  
