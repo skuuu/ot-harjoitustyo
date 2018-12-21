@@ -9,7 +9,7 @@ Käyttöliittymä sisältää viisi erillistä näkymää
 - kirjautumisnäkymä (passwordScene)
 - uuden käyttäjän luominen (newUserScene)
 - päänäkymä (startScene)
-- asetusnäkymä (SettingsScene)
+- asetusnäkymä (settingsScene)
 - kulunäkymä (expenseScene), joka avautuu uuteen ikkunaan.
 
 jokainen näistä on toteutettu omana Scene-olionaan. Näkymistä yksi kerrallaan on näkyvänä eli sijoitettuna sovelluksen Stageen. Graafinen käyttöliittymä on rakennettu ohjelmallisesti luokassa [gui.UserInterface](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/main/java/saastopossuapp/gui/UserInterface.java).
