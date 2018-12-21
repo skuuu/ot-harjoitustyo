@@ -58,7 +58,7 @@ Käyttäjä voi kirjautua aloitusnäkymässä painikkeesta _login_ jonka aktivaa
 #### Uuden käyttäjän luominen  
 Uuden käyttäjän voi luoda _Create new user account_ -painikkeesta, jolloin käyttöliittymä kutsuu logic-luokan metodia _createUser_ joka kutsuu UserAccountDao-luokan metodia _saveOrUpdate_ ja palauttaa true, jos tallennus onnistui ja muuten false. False-tapauksissa käyttäjälle näytetään virheviesti. 
 
-<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/createNewUserDiagram.jpg" width="700">
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/createuseraccountSeq.png" width="700">
 
 #### Activityn luominen  
 Activity luodaan valitsemalla päivä ja kategoria, syöttämällä summa ja aktivoimalla painike _add_, jolloin kutsutaan Logic-luokan metodia addExpense. Tästä metodista Activity lisätään tietokantaan ActivityDao-luokan save-metodia käyttäen. 
