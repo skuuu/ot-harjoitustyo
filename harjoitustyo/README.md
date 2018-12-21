@@ -21,7 +21,7 @@ Sovelluksen avulla käyttäjä voi tarkastella budjettiaan graafisena esityksen�
 
 ## Releaset
 
-[Viikko 6](https://github.com/skuuu/ot-harjoitustyo/releases/tag/Saastopossuv1.2)  
+[Loppuarvioitava versio](https://github.com/skuuu/ot-harjoitustyo/releases/tag/Saastopossuv1.3)  
 
 ## Komentorivitoiminnot
 
