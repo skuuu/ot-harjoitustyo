@@ -53,7 +53,7 @@ Päätoiminnallisuudet kuvattu seuraavaksi sekvenssikaavioina.
 #### käyttäjän kirjautuminen  
 Käyttäjä voi kirjautua aloitusnäkymässä painikkeesta _login_ jonka aktivaatio kutsuu logic-luokan metodia _checkUsername_ ja palauttaa true, jos käyttäjänimi löytyy tietokannasta ja muuten false. 
 
-<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/loginDiagram.jpg" width="600">
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/loginSequence.jpg" width="600">
 
 #### Uuden käyttäjän luominen  
 Uuden käyttäjän voi luoda _Create new user account_ -painikkeesta, jolloin käyttöliittymä kutsuu logic-luokan metodia _createUser_ joka kutsuu UserAccountDao-luokan metodia _saveOrUpdate_ ja palauttaa true, jos tallennus onnistui ja muuten false. False-tapauksissa käyttäjälle näytetään virheviesti. 
