@@ -36,7 +36,7 @@ Pylväsidagrammissa näkyvät lisätyt kulut päiväkohtaisesti ja kategorioitta
 Klikkaamalla pylvästä avautuu ikkuna, jossa käyttäjä näkee pylvään kulut (yksittäisen kulun summa euroina sekä lisätiedot). 
 Käyttäjä voi halutessaan poistaa kulun näppäimellä _delete_:
   
-<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/ScreenshotExpenseScene.jpg" width="700">
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/screenshotGUI.png" width="700">
 
 
   
