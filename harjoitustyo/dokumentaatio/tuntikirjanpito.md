@@ -22,4 +22,7 @@
 |13.12.|  3   | refactoring, javadoc| 
 |15.12.|  2   | tests | 
 |18.12.|  3   | spesific input error messages |
-| yht   | 71   | | 
+|19.12.|  4   | added feature to view bar's expenses by clicking bar and to spesify additional descriptions for expenses | 
+|20.12.|  2   | tests, javadoc, refactoring |
+|21.12.|  2   | last updates, cleaning code |
+| yht   | 79   | | 
