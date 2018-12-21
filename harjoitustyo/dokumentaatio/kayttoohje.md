@@ -26,16 +26,22 @@ Uusi käyttäjä luodaan syöttämällä käyttäjätunnus syötekenttään ja k
 
 Jos käyttäjän luominen onnistuu, palataan kirjautumisnäkymään.
 
-## Kulujen tarkasteleminen  
+## Kulujen tarkasteleminen ja poistaminen
 
 Onnistuneen kirjautumisen myötä siirrytään käyttäjän kulut näyttävään päänäkymään. 
 Näkymä mahdollistaa kulujen näyttämisen graafisesti. Oletuksena sovellus näyttää kulut kuukauden ajalta. Aikavälin voi määritellä valitsemalla päivät DatePicker-valikosta. 
 
+Pylväsidagrammissa näkyvät lisätyt kulut päiväkohtaisesti ja kategorioittain. Yksittäisen pylvään tietoja pystyy tarkastelemaan viemällä hiiren pylvään päälle, jolloin käyttäjälle näytetään ko pylvään summa euroina. Klikkaamalla pylvästä avautuu ikkuna, jossa käyttäjä näkee pylvään kulut (yksittäisen kulun summa euroina sekä lisätiedot). 
+Käyttäjä voi halutessaan poistaa kulun näppäimellä _delete_.
+
 ## Kulujen lisääminen  
 Kulun voi lisätä kirjoittamalla summan (eurot, sentit) niille merkattuihin tekstikenttiin. Eurokenttä ei saa olla tyhjä, ja senttikentän syötteen tulee olla max. kahden numeron mittainen. Mikäli senttikenttä on tyhjä, täydentää ohjelma sen automaattisesti nollaksi. Kulu lisätään valitsemalla kululle päivämäärä DatePicker-valikosta sekä kategoria _chooose category_ -valikosta. 
 
-Uuden kategorian voi määritellä _create new_ -valinnalla, jolloin kategorian nimentään avautuu tekstikenttä. Kategorian nimentä onnistuu samojen rajoitteiden mukaan kuin käyttäjätunnuksenkin. Kategorioita voi olla max. 7 ja luotavan kategorian nimen on oltava uniikki.
+Lisättävälle kululle voi määritellä lisätietoja (esimerkiksi kaupan nimi, ostoksen tietoja) _Expense Description_-kohdassa kirjoittamalla syötekenttään. Syöte voi olla 1-30 merkkiä pitkä ja sisältää kirjaimia a-z, A_Z, välilyöntejä syötteen keskellä ja numeroita 0-9. Jos kenttä jätetään tyhjäksi, ohjelma täydentää sen tekstillä _no description_.
+
+Uuden kategorian voi määritellä _create new_ -valinnalla, jolloin kategorian nimentään avautuu tekstikenttä. Kategoria voi sisältää kirjaimia a-z, A-Z sekä numeroita 0-9. Kategorioita voi olla max. 7 ja luotavan kategorian nimen on oltava uniikki.
 Kulu tallettuu klikkaamalla painiketta _Add Expense_. 
+Mikäli lisättävä kulu on virheellinen, käyttäjälle näytetään syötekohtainen virheviesti. 
 
 
 ## Budjetin määritteleminen  
