@@ -1,7 +1,15 @@
 # Arkkitehtuurikuvaus
 
 ## Rakenne
+Sovelluksen pakkausrakenne:  
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/packageStructure.png" width="400">
+  
+Pakkaus _saastopossuapp.gui_ sisältää graafisen käyttöliittymän,   
+_saastopossuapp.logic_ sovelluslogiikasta vastaavat luokat.   
+_saastopossuapp.domain_ peruskäsitteistä luodut luokat sekä  
+_saastopossuapp.dao_ tietojen pysyväistallennuksesta ja tietokantayhteydestä vastaavat luokat.  
 
+  
 
 ## Käyttöliittymä
 
