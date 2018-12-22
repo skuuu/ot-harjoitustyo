@@ -18,7 +18,7 @@ Sovelluksen testaus suoritetaan erillisessä testitieokannassa. Jokaista luokkaa
 
 Sovelluksen tämänhetkinen testauksen rivikattavuus on 95% ja haarautumakattavuus 90%. 
 
-<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/jacocotest.png" width="800">
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/jacocotest.png" width="900">
 
 Testit eivät kata tilanteita, joissa tarvittavia tiedostoja ei löydy.
 
@@ -28,11 +28,11 @@ Sovelluksen järjestelmätestaus on suoritettu manuaalisesti.
 
 ### Asennus ja konfigurointi  
 
-Sovellusta on testattu sekä tilanteissa, joissa tarvittavat .db-tiedostot ovat olleet olemassa ja joissa niitä ei ole ollut jolloin ohjelma on luonut ne itse.
+Sovellusta on testattu sekä tilanteissa, joissa tarvittavat .db-tiedostot ovat olleet ohjeiden mukaisesti olemassa samassa kansiossa .jar-tiedoston kanssa sekä tilanteissa, joissa tarvittavia .db-tiedostoja ei ole löytynyt, jolloin sovellus on luonut ne Database-luokan ohjeiden mukaisesti.
 
 ### Toiminnallisuudet  
 
-Sovellus on testattu laajasti myös virheellisten syötteiden osalta ja sovellus antaa käyttäjälle palautetta virheen laadusta virheviestin muodossa. 
+Sovellus on testattu laajasti myös virheellisten syötteiden osalta ja sovellus antaa käyttäjälle palautetta virheen laadusta syötekohtaisen virheviestin muodossa. 
 
 
 ## Sovellukseen jääneet laatuongelmat
