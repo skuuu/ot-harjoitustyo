@@ -25,4 +25,5 @@
 |19.12.|  4   | added feature to view bar's expenses by clicking bar and to spesify additional descriptions for expenses | 
 |20.12.|  2   | tests, javadoc, refactoring |
 |21.12.|  2   | last updates, cleaning code |
-| yht   | 79   | | 
+|22.12.|  1  | final updates, created configuration possibility |
+| yht   | 80   | | 
