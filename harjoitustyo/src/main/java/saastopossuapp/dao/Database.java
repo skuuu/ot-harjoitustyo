@@ -18,18 +18,21 @@ public class Database {
     private String database;
 
     public Database() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
-        this.databaseAddress = "jdbc:sqlite:saastopossuDatabase.db";
+        this.databaseAddress = "jdbc:sqlite:saastopossu.db";
         this.init();
     }
     
-
+    /**
+     * Method changes database address
+     * @param databaseAddress- new database address
+     */ 
     public void changeDatabase(String databaseAddress) {
         this.databaseAddress = databaseAddress;
     }
     
     /**
      * Method creates connection to SQL database
-     * @return  connection
+     * @return  connection to database
      * @throws java.sql.SQLException if database connection fails
      */ 
     public Connection getConnection() throws SQLException {
@@ -39,19 +42,19 @@ public class Database {
     /**
      * Method initializes the Database class
      * @throws java.sql.SQLException if database connection fails
-     * @throws java.io.IOException if connection fails
+     * @throws java.io.IOException if problems with configuration
      */ 
     public void init() throws SQLException, IOException {
         Properties props = new Properties();
         try {
             props.load(new FileInputStream("saastopossu.conf"));
         } catch (FileNotFoundException ex) {
-            databaseAddress = "jdbc:sqlite:saastopossuDatabase.db";
         }
+        
         database = props.getProperty("database");
         databaseAddress = "jdbc:sqlite:" + database;
         if (database.equals("")) {
-            databaseAddress = "jdbc:sqlite:saastopossuDatabase.db";
+            databaseAddress = "jdbc:sqlite:saastopossu.db";
         }
         
         List<String> commands = this.sqliteCommands();

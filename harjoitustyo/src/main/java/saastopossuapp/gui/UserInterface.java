@@ -1,14 +1,11 @@
 
 package saastopossuapp.gui;
 import com.sun.javafx.charts.Legend;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Properties;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -71,11 +68,15 @@ public class UserInterface extends Application {
     private ScrollPane scrollPaneLayout;
     private Stage expenseStage;
     
-
+    /**
+     * Method initializes class 
+     * @throws java.lang.ClassNotFoundException if class not found
+     * @throws java.sql.SQLException if connection fails
+     * @throws java.io.IOException if problems with confiuration
+     */
     @Override
     public void init() throws ClassNotFoundException, SQLException, IOException {
         db = new Database();
-      
         UserAccountDao userAccountDao = new UserAccountDao(db);
         ActivityDao activityDao = new ActivityDao (db, username);
         this.afterDatePicker = new DatePicker(LocalDate.now().minusMonths(1));

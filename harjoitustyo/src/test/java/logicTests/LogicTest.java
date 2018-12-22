@@ -39,8 +39,9 @@ public class LogicTest {
      * Method creates setup for the tests. 
      * One UserAccount (testUser) and one activity (testActivity1) will be added to testdatabase.
      * Additional Activity (testActivity2) will be added separately in tests if needed.
-     * @throws java.sql.SQLException
-     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException if connection to database fails
+     * @throws java.lang.ClassNotFoundException if class not found 
+     * @throws java.io.IOException if configuration problems
      */
     @Before
     public void setUp() throws SQLException, ClassNotFoundException, IOException { 

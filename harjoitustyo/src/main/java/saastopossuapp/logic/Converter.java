@@ -16,7 +16,6 @@ import java.util.Locale;
  * 
  */
 public class Converter {
-    
 
     /**
      * Method converts date of type String to localDate
