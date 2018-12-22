@@ -3,10 +3,17 @@
 ## Sovelluksen tarkoitus  
 
 Sovellus on budjetoija, jonka avulla voi luoda ja tarkastella budjettia.  
-Käyttäjä lisää menonsa ja budjettinsa sovellukseen, ja sovellus näyttää budjetin ja kulujen perusteella tehdyt laskelmat sekä luo graafisen esityksen (pylväsdiagrammi) kuukausittaisista menoista päivä- ja kategoriakohtaisesti.
+Käyttäjä lisää kulunsa (expense) ja budjettinsa sovellukseen ja sovellus luo graafisen esityksen (pylväsdiagrammi) kuukausittaisista kuluista päivä- ja kategoriakohtaisesti sekä näyttää seuraavat käyttäjän määrittelemän budjetin ja kulujen perusteella tehdyt laskelmat: 
+ - Budjetti käyttäjän määrittelemälle aikavälille
+ - Budjetista käytetty prosenttiosuus käyttäjän määrittelemällä aikavälillä
+ - Kokonaiskulut käyttäjän määrittelemällä aikavälillä
+ - Keskimääräinen päiväkohtainen kulutus euroina
+ - Budjetin alijäämäisyys käyttäjän määrittelemällä aikavälillä
+ 
+ Käyttäjä voi tarkastella kuluja paitsi päivä- ja kategoriakohtaisesti, myös yksittäisinä kuluina.
  
 ## Käyttäjät  
-Sovelluksella voi olla monta käyttäjää.
+Sovelluksella voi olla monta käyttäjää, joilta jokaiselta vaaditaan käyttäjätunnus.
 
 ## Käyttöliittymäluonnos  
 Käyttöliittymä koostuu viidestä eri näkymästä. 
@@ -22,12 +29,12 @@ Klikkaamalla pylväskaavion pylväitä avautuu uusi ikkuna ja näkymä (expenseS
 - käyttäjä voi luoda järjestelmään käyttäjätunnuksen
   - käyttäjätunnuksen täytyy olla uniikki, sisältää 2-30 kirjainta (a-z, A-Z) ja/tai numeroa (0-9).
 - käyttäjä voi kirjautua järjestelmään
-  - kirjautuminen onnistuu syötettäessä olemassaoleva käyttäjätunnus kirjautumislomakkeelle
-  - jos käyttäjää ei löydy, ilmoittaa järjestelmä tästä
+  - kirjautuminen onnistuu syötettäessä olemassaoleva käyttäjätunnus tekstikenttään
+  - jos käyttäjää ei löydy, ilmoittaa järjestelmä tästä virheviestillä
 
 ### Kirjautumisen jälkeen  
 - Käyttäjä näkee päivittäisen budjettinsa toteutumisen pylväsdiagrammina kuukauden ajalta
-- Käyttäjä näkee budjettinsa ja kulujen pohjalta automaattisesti tehdyt laskelmat (kokonaiskulut aikavälillä, päiväkohtaiset kulut, valitulle aikavälille laskettu budjetti, valitulla aikavälillä käytetty prosenttiosuus budjetista)
+- Käyttäjä näkee budjettinsa ja kulujen pohjalta automaattisesti tehdyt laskelmat (kokonaiskulut aikavälillä, päiväkohtaiset kulut, valitulle aikavälille laskettu budjetti, valitulla aikavälillä käytetty prosenttiosuus budjetista, säästöt)
 - Käyttäjä voi valita haluamansa aikavälin tarkasteluun
 - Käyttäjä voi lisätä kulun (summa, pvm, kategoria, lisätiedot)
 - Käyttäjä voi lisätä kulun nimeämällään uudella kategorialla
@@ -37,10 +44,11 @@ Klikkaamalla pylväskaavion pylväitä avautuu uusi ikkuna ja näkymä (expenseS
 
 ## Jatkokehitysideoita  
 Perusversion jälkeen järjestelmää täydennetään ajan salliessa esim. seuraavilla toiminnallisuuksilla:  
-:ballot_box_with_check: Käyttäjä voi lisätä kuluja kategorioittain ja määritellä uuden kategorian    
-:black_square_button: Käyttäjätunnuksen vaihtaminen/poistaminen  
+:ballot_box_with_check: Käyttäjä voi lisätä kuluja kategorioittain ja määritellä uuden kategorian
 :ballot_box_with_check:	Kulun poistaminen  
+:black_square_button: Käyttäjätunnuksen vaihtaminen/poistaminen  
 :black_square_button: Sovelluksen ulkoasun tyylittely  
+:black_square_button: Tulojen huomiointi
 
 Uudet ominaisuudet, jotka eivät kuuluneet alkuperäiseen vaatimusmäärittelyyn:  
 :ballot_box_with_check: Käyttäjä voi lisätä kululle kategorian lisäksi myös lisätietoja (esimerkiksi kauppa, ostos)  
