@@ -13,6 +13,9 @@ Sovelluksen testaus suoritetaan erillisessä testitieokannassa. Jokaista luokkaa
 [ConverterTest](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/test/java/logicTests/ConverterTest.java)  
 [LogicTest](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/src/test/java/logicTests/LogicTest.java)  
 
+Integraatiotestit testaavat kokonaisvaltaisesti sovelluksen toimintaa, testitietokantaan tallentamista, tietokannasta hakua ja tiedon muokkaamista (esim. LogicTest). Tietokantayhteyttä vaativat luokat testataan erillisessä testitietokannassa. Testejä on tehty laajasti metodeille. Ainoastaan suoraviivaisimmat setter- ja getter- metodit jätettiin JUnit-testauksen ulkopuolelle. Testejä on kirjoitettu myös sellaisille metodeille, jotka olisi ilman testausta määritelty private-arvoisiksi.
+
+
 
 ### Testauskattavuus
 
@@ -24,7 +27,7 @@ Testit eivät kata tilanteita, joissa tarvittavia tiedostoja ei löydy.
 
 ## Järjestelmätestaus
 
-Sovelluksen järjestelmätestaus on suoritettu manuaalisesti.
+Sovelluksen järjestelmätestaus on suoritettu manuaalisesti ja testikäyttäjillä.
 
 ### Asennus ja konfigurointi  
 
@@ -33,6 +36,7 @@ Sovellusta on testattu sekä tilanteissa, joissa tarvittavat .db-tiedostot ovat 
 ### Toiminnallisuudet  
 
 Sovellus on testattu laajasti myös virheellisten syötteiden osalta ja sovellus antaa käyttäjälle palautetta virheen laadusta syötekohtaisen virheviestin muodossa. 
+Sovellus on testattu SQL-injektioiden varalta.
 
 
 ## Sovellukseen jääneet laatuongelmat
