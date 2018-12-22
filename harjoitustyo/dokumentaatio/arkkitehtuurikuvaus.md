@@ -69,7 +69,7 @@ Uuden käyttäjän voi luoda _Create new user account_ -painikkeesta, jolloin k�
 <img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/createuseraccountSeq.png" width="700">
 
 #### Activityn luominen  
-Activity luodaan valitsemalla päivä ja kategoria, syöttämällä summa ja aktivoimalla painike _add_, jolloin kutsutaan Logic-luokan metodia addExpense. Tästä metodista Activity lisätään tietokantaan ActivityDao-luokan save-metodia käyttäen. 
+Activity (kulu) luodaan valitsemalla päivä, kategoria, lisätiedot, summa ja aktivoimalla painike _add_, jolloin kutsutaan Logic-luokan metodia addExpense. Tästä metodista Activity lisätään tietokantaan ActivityDao-luokan save-metodia käyttäen. 
 
 <img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/newActivitySeq.png" width="700">
 
@@ -80,7 +80,7 @@ Sovelluksen toimintaperiaate on samankaltainen myös muille toiminnoille. Graafi
 
 
 ### Käyttöliittymä  
-Nykyisessä versiossa käyttäjän muuttaessa aikaväliä tietyissä tilanteissa pylväskaavion pylväiden värit vaihtuvat. 
+Nykyisessä versiossa käyttäjän muuttaessa aikaväliä tietyissä tilanteissa pylväskaavion pylväiden värit vaihtuvat, mutta silti saman kategorian pylväät pysyvät keskenään samanvärisinä.
 
 
 
