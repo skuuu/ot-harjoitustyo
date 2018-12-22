@@ -37,7 +37,12 @@ Klikkaamalla pylväskaavion pylväitä avautuu uusi ikkuna ja näkymä (expenseS
 
 ## Jatkokehitysideoita  
 Perusversion jälkeen järjestelmää täydennetään ajan salliessa esim. seuraavilla toiminnallisuuksilla:  
-:ballot_box_with_check: Käyttäjä voi lisätä menoja kategorioittain ja määritellä uuden kategorian    
+:ballot_box_with_check: Käyttäjä voi lisätä kuluja kategorioittain ja määritellä uuden kategorian    
 :black_square_button: Käyttäjätunnuksen vaihtaminen/poistaminen  
-:ballot_box_with_check:	Menon poistaminen  
+:ballot_box_with_check:	Kulun poistaminen  
 :black_square_button: Sovelluksen ulkoasun tyylittely  
+
+Uudet ominaisuudet, jotka eivät kuuluneet alkuperäiseen vaatimusmäärittelyyn:  
+:ballot_box_with_check: Käyttäjä voi lisätä kululle kategorian lisäksi myös lisätietoja (esimerkiksi kauppa, ostos)  
+:ballot_box_with_check: Budjettilaskelmiin lisätty laskelma budjetin alijäämäisyydestä  
+:ballot_box_with_check: Käytettävyyttä parannettu lisäämällä pylväille tooltipit, jotka näyttävät pylvään kulujen summan  
