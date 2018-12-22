@@ -44,7 +44,7 @@ Klikkaamalla pylväskaavion pylväitä avautuu uusi ikkuna ja näkymä (expenseS
 
 ## Jatkokehitysideoita  
 Perusversion jälkeen järjestelmää täydennetään ajan salliessa esim. seuraavilla toiminnallisuuksilla:  
-:ballot_box_with_check: Käyttäjä voi lisätä kuluja kategorioittain ja määritellä uuden kategorian
+:ballot_box_with_check: Käyttäjä voi lisätä kuluja kategorioittain ja määritellä uuden kategorian  
 :ballot_box_with_check:	Kulun poistaminen  
 :black_square_button: Käyttäjätunnuksen vaihtaminen/poistaminen  
 :black_square_button: Sovelluksen ulkoasun tyylittely  
