@@ -3,7 +3,7 @@
 ## Sovelluksen tarkoitus  
 
 Sovellus on budjetoija, jonka avulla voi luoda ja tarkastella budjettia.  
-Käyttäjä lisää menonsa ja budjettinsa sovellukseen, ja sovellus laskee päiväkohtaiset menot sekä osuuden tavoitebudjetista sekä luo raportin kuukausittaisista menoista.
+Käyttäjä lisää menonsa ja budjettinsa sovellukseen, ja sovellus näyttää budjetin ja kulujen perusteella tehdyt laskelmat sekä luo graafisen esityksen (pylväsdiagrammi) kuukausittaisista menoista päivä- ja kategoriakohtaisesti.
  
 ## Käyttäjät  
 Sovelluksella voi olla monta käyttäjää.
@@ -13,7 +13,7 @@ Käyttöliittymä koostuu viidestä eri näkymästä.
 Kirjautumisnäkymässä (passwordScene) käyttäjä kirjautuu sisään tai siirtyy näkymään (createUserScene) jossa luo uuden käyttäjätunnuksen. 
 Päänäkymässä (startScene) käyttäjä näkee kuukauden ajalta menonsa. Käyttäjä voi pyytää raporttia haluamaltaan aikaväliltä tai lisätä menon. 
 Asetukset-näkymässä (SettingsScene) käyttäjä voi mm. muokata päiväkohtaista budjettiaan. 
-Klikkaamalla pylväskaavion pylväitä avautuu uusi ikkuna ExpenseScene-näkymällä, jossa yksittäisen päivän kategorian menoja voi tarkastella ja poistaa.
+Klikkaamalla pylväskaavion pylväitä avautuu uusi ikkuna ja näkymä (expenseScene), jossa yksittäisen päivän kategorian menoja voi tarkastella ja poistaa.
 
 <img src= "https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/vaatimusmaarittely21.12..jpg" width="800">
 
@@ -27,10 +27,11 @@ Klikkaamalla pylväskaavion pylväitä avautuu uusi ikkuna ExpenseScene-näkymä
 
 ### Kirjautumisen jälkeen  
 - Käyttäjä näkee päivittäisen budjettinsa toteutumisen pylväsdiagrammina kuukauden ajalta
+- Käyttäjä näkee budjettinsa ja kulujen pohjalta automaattisesti tehdyt laskelmat (kokonaiskulut aikavälillä, päiväkohtaiset kulut, valitulle aikavälille laskettu budjetti, valitulla aikavälillä käytetty prosenttiosuus budjetista)
 - Käyttäjä voi valita haluamansa aikavälin tarkasteluun
-- Käyttäjä voi lisätä menon (summa, kategoria, pvm)
-- Käyttäjä voi lisätä menon nimeämällään uudella kategorialla
-- Käyttäjä voi tarkastella yksittäisen päivänja kategorian (pylvään) kuluja ja poistaa niitä
+- Käyttäjä voi lisätä kulun (summa, pvm, kategoria, lisätiedot)
+- Käyttäjä voi lisätä kulun nimeämällään uudella kategorialla
+- Käyttäjä voi tarkastella yksittäisen päivän ja kategorian (pylvään) kuluja ja poistaa niitä
 - Käyttäjä voi siirtyä Settings-näkymään määrittelemään budjettinsa
 - Käyttäjä voi kirjautua ulos
 
