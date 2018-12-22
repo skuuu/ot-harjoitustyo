@@ -1,10 +1,22 @@
 # Käyttöohje
 
 
-Lataa tiedosto [saastopossu.jar](https://github.com/skuuu/ot-harjoitustyo/releases/tag/Saastopossuv1.3) 
+Lataa tiedosto [Saastopossu.jar](https://github.com/skuuu/ot-harjoitustyo/releases/tag/Saastopossuv1.3) 
 
 ## Konfigurointi
-Sovelluksen onnistunut käynnistys ja testaus edellyttää, että sovelluksen generoimat .jar -tiedosto, piggyBankDatabase.db ja piggyBankTestDatabase.db löytyvät samasta kansiosta. 
+Sovelluksen onnistunut käynnistys ja testaus edellyttää, että sovelluksen generoimat saastopossu.conf-tiedosto, .jar -tiedosto ja .db -tiedostot löytyvät samasta kansiosta. 
+
+Ohjelma olettaa, että ohjelman sisältävän kansion juuressa on saastopossu.conf -tiedosto. 
+Tiedostossa määritellään käytettävän tietokannan nimi. 
+Käyttäjä voi muuttaa tietokannan nimeä muuttamalla .db -tietokantatiedoston nimen ja saastopossu.conf -tiedoston parametrin "database". 
+
+saastopossu.conf - tiedosto on muotoa:
+
+```
+database=saastopossu.db
+```
+Konfigurointitiedoston voi ladata releasen yhteydestä tai [täältä](https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/saastopossu.conf). 
+
 
 ## Ohjelman käynnistäminen
 
