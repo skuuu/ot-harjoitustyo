@@ -80,6 +80,6 @@ public class ActivityTest {
     
     @Test
     public void toString_returnsCorrectString() {
-    assertEquals("1.0€	description", activity1.toString());
+    assertEquals("1.0€", activity1.toString());
     }
 }

@@ -1,10 +1,14 @@
 
 package saastopossuapp.gui;
 import com.sun.javafx.charts.Legend;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Properties;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -69,8 +73,9 @@ public class UserInterface extends Application {
     
 
     @Override
-    public void init() throws ClassNotFoundException, SQLException {
+    public void init() throws ClassNotFoundException, SQLException, IOException {
         db = new Database();
+      
         UserAccountDao userAccountDao = new UserAccountDao(db);
         ActivityDao activityDao = new ActivityDao (db, username);
         this.afterDatePicker = new DatePicker(LocalDate.now().minusMonths(1));
@@ -249,8 +254,11 @@ public class UserInterface extends Application {
         scrollPaneLayout.setPrefSize(300, 300);
         activityNodes.getChildren().clear();   
         Label expenseTitleLabel = new Label("Expenses on " + item.getXValue() + " in category " + serie.getName() +":\n\n");
+        HBox box = new HBox();
+        box.setAlignment(Pos.CENTER_LEFT);        
         expenseTitleLabel.setFont(Font.font(null, FontWeight.BOLD, 12));
         activityNodes.getChildren().add(expenseTitleLabel);
+        
         for (Activity a: logic.getDailyExpensesLabel(item.getXValue(), serie.getName(), username)) {
             activityNodes.getChildren().add(createActivityNode(a));
         }
@@ -267,9 +275,12 @@ public class UserInterface extends Application {
      */
     public Node createActivityNode(Activity activity) {
         HBox box = new HBox(10);
+        box.setAlignment(Pos.CENTER_LEFT);
         Label label  = new Label(activity.toString());
-        label.setMinHeight(28);
+        Label label2 = new Label(activity.getDescription());
+        label.setMinWidth(50);
         Button button = new Button("Delete");
+        button.setAlignment(Pos.CENTER);
         button.setOnAction(e-> {
             logic.deleteActivity(activity);
             refreshScreen();
@@ -277,7 +288,7 @@ public class UserInterface extends Application {
             expenseStage.close();
         });
         box.setPadding(new Insets(5,5,5,5));
-        box.getChildren().addAll(button, label);
+        box.getChildren().addAll(button, label, label2);
         return box;
     }
     

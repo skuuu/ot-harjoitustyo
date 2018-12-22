@@ -6,8 +6,6 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import saastopossuapp.dao.ActivityDaoInterface;
 import saastopossuapp.dao.UserAccountDaoInterface;
@@ -113,7 +111,7 @@ public class Analysis {
         if (countBudgetForChosenPeriod() - sumOfExpensesByDate() < 0) {
             return 0.0;
         }
-        return countBudgetForChosenPeriod() - sumOfExpensesByDate();
+        return formatDecimals(countBudgetForChosenPeriod() - sumOfExpensesByDate());
     }
 }
 

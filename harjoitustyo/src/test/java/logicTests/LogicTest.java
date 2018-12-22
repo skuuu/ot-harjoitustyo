@@ -1,6 +1,7 @@
 package logicTests;
 
 
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -42,7 +43,7 @@ public class LogicTest {
      * @throws java.lang.ClassNotFoundException
      */
     @Before
-    public void setUp() throws SQLException, ClassNotFoundException { 
+    public void setUp() throws SQLException, ClassNotFoundException, IOException { 
         this.username = "tester";
         this.db = new Database();
         db.changeDatabase("jdbc:sqlite:testdatabase.db");
@@ -160,10 +161,10 @@ public class LogicTest {
     @Test
     public void getBudgetAnalysis_ReturnsCorrectString_IfValidDates() throws SQLException {
         StringBuilder sb = new StringBuilder();
-            sb.append("Total expenses in the chosen time period: 0.1€ (average 0.1€/day in the chosen time period)")
-                    .append("\nYour daily budget: 1.0€")
-                    .append("\nYour budget for chosen time period: 5.0€, (spent in the chosen time period: ")
+            sb.append("\nYour daily budget: 1.0€")
+                    .append("\nYour budget for chosen time period: 5.0€ (spent in the chosen time period: ")
                     .append ("2.0%)")
+                    .append("\nTotal expenses in the chosen time period: 0.1€ (average 0.1€/day in the chosen time period)")
                     .append("\nYou have saved: 4.9€");
         assertEquals(sb.toString(), logic.getBudgetAnalysis());
     }
@@ -243,11 +244,6 @@ public class LogicTest {
     @Test
     public void correctCents_Returns00_IfEmptyString() throws SQLException{
         assertEquals("00", logic.correctCents(""));
-    }
-    
-    @Test
-    public void correctCents_Returns10_IfSingleNumber() throws SQLException{
-        assertEquals("10", logic.correctCents("1"));
     }
     
     @Test

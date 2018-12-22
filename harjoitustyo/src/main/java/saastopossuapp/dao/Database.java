@@ -2,17 +2,22 @@
 package saastopossuapp.dao;
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Class is responsible for database connection
  */
 public class Database {
     private String databaseAddress;
+    private String database;
 
-    public Database() throws ClassNotFoundException, SQLException {
+    public Database() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
         this.databaseAddress = "jdbc:sqlite:saastopossuDatabase.db";
         this.init();
     }
@@ -34,10 +39,22 @@ public class Database {
     /**
      * Method initializes the Database class
      * @throws java.sql.SQLException if database connection fails
+     * @throws java.io.IOException if connection fails
      */ 
-    public void init() throws SQLException {
+    public void init() throws SQLException, IOException {
+        Properties props = new Properties();
+        try {
+            props.load(new FileInputStream("saastopossu.conf"));
+        } catch (FileNotFoundException ex) {
+            databaseAddress = "jdbc:sqlite:saastopossuDatabase.db";
+        }
+        database = props.getProperty("database");
+        databaseAddress = "jdbc:sqlite:" + database;
+        if (database.equals("")) {
+            databaseAddress = "jdbc:sqlite:saastopossuDatabase.db";
+        }
+        
         List<String> commands = this.sqliteCommands();
-
         Connection conn = getConnection();
         Statement st = conn.createStatement();
         for (String com : commands) {

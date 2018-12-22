@@ -1,5 +1,6 @@
 package daoTests;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import org.junit.After;
 import org.junit.Before;
@@ -24,7 +25,7 @@ public class UserAccountDaoTest {
      * @throws java.lang.ClassNotFoundException
      */
     @Before
-    public void setUp() throws ClassNotFoundException, SQLException {
+    public void setUp() throws ClassNotFoundException, SQLException, IOException {
         db = new Database();
         db.changeDatabase("jdbc:sqlite:testdatabase.db");
         db.init();

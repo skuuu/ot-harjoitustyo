@@ -122,6 +122,6 @@ public class Activity implements Comparable<Activity> {
     @Override
     public String toString() {
         Converter conv = new Converter();
-        return conv.toEuros(cents) + "€\t" + this.description;
+        return conv.toEuros(cents) + "€";
     }
 }

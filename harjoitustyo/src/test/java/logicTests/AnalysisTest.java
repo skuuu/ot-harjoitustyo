@@ -1,6 +1,7 @@
 package logicTests;
 
 
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -41,7 +42,7 @@ public class AnalysisTest {
      * @throws java.lang.ClassNotFoundException
      */
     @Before
-    public void setUp() throws ClassNotFoundException, SQLException {
+    public void setUp() throws ClassNotFoundException, SQLException, IOException {
         this.db = new Database(); 
         db.changeDatabase("jdbc:sqlite:testdatabase.db");
         db.init();

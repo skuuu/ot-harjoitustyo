@@ -227,12 +227,12 @@ public class Logic {
                 Logger.getLogger(Logic.class.getName()).log(Level.SEVERE, null, ex);
             }
             StringBuilder sb = new StringBuilder();
-            sb.append("Total expenses in the chosen time period: ")
+            sb.append("\nYour daily budget: ").append(analysis.getBudget()).append("€")
+                    .append("\nYour budget for chosen time period: ").append(analysis.countBudgetForChosenPeriod()).append("€ (spent in the chosen time period: ")
+                    .append(analysis.countExpensePercentageFromBudget()).append("%)")
+                    .append("\nTotal expenses in the chosen time period: ")
                     .append(analysis.sumOfExpensesByDate()).append("€")
                     .append(" (average ").append(analysis.countAverage()).append("€/day in the chosen time period)")
-                    .append("\nYour daily budget: ").append(analysis.getBudget()).append("€")
-                    .append("\nYour budget for chosen time period: ").append(analysis.countBudgetForChosenPeriod()).append("€, (spent in the chosen time period: ")
-                    .append(analysis.countExpensePercentageFromBudget()).append("%)")
                     .append("\nYou have saved: ").append(analysis.countSavings()).append("€");
             return sb.toString();
         }
@@ -321,7 +321,7 @@ public class Logic {
     }
     
     /**
-     * Method corrects user input so that missing input in field cents is corrected to "00" and missing second number to "0".
+     * Method corrects user input so that missing input in field cents is corrected to "00"..
      * @param cents - amount of cents
      * @return corrected cents value
      */
@@ -329,14 +329,12 @@ public class Logic {
         if (cents.isEmpty()) {
             cents = "00";
         }
-        if (cents.length() == 1) {
-            cents = cents + "0";
-        }
         return cents;
     }
 
     /**
-     * Method validates that user's input in fields euros and cents contains only numbers, isn't null and is greater than 0 and cents length is max 2 numbers. 
+     * Method validates that user's input in fields euros and cents contains only numbers, 
+     * isn't null and is greater than 0 and cents length is max 2 numbers. 
      * @param euros - input in field euros
      * @param cents - input in field cents
      * @return true if input is valid, else false

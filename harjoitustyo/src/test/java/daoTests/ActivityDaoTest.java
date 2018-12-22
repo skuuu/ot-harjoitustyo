@@ -1,5 +1,6 @@
 package daoTests;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import org.junit.After;
@@ -34,7 +35,7 @@ public class ActivityDaoTest {
      * @throws java.lang.ClassNotFoundException
      */
     @Before
-    public void setUp() throws SQLException, ClassNotFoundException {
+    public void setUp() throws SQLException, ClassNotFoundException, IOException {
         this.db = new Database();
         db.changeDatabase("jdbc:sqlite:testdatabase.db");
         db.init();
@@ -117,7 +118,6 @@ public class ActivityDaoTest {
     
     @Test
     public void findAllByCategory_ReturnsMapThatHasActivitiesFromRightTimePeriod() throws SQLException {
-        System.out.println(ad.findAllByCategory(dateBeforeActivitysDate, dateBeforeActivitysDate, username));
         assertEquals(0, ad.findAllByCategory(dateBeforeActivitysDate, dateBeforeActivitysDate, username).size());
     }
     
