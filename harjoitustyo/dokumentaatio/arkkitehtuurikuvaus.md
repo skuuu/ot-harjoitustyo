@@ -58,7 +58,7 @@ Sovellus tallentaa tiedot sql-tietokantaan (saastopossuDatabase.db), jossa on ka
 
 Päätoiminnallisuudet kuvattu seuraavaksi sekvenssikaavioina. 
 
-#### käyttäjän kirjautuminen  
+#### Käyttäjän kirjautuminen  
 Käyttäjä voi kirjautua aloitusnäkymässä painikkeesta _login_ jonka aktivaatio kutsuu logic-luokan metodia _checkUsername_ ja palauttaa true, jos käyttäjänimi löytyy tietokannasta ja muuten false. 
 
 <img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/loginSeq.png" width="700">
@@ -79,7 +79,7 @@ Sovelluksen toimintaperiaate on samankaltainen myös muille toiminnoille. Graafi
 ## Ohjelman rakenteeseen jääneet heikkoudet   
 
 
-### käyttöliittymä  
+### Käyttöliittymä  
 Nykyisessä versiossa käyttäjän muuttaessa aikaväliä tietyissä tilanteissa pylväskaavion pylväiden värit vaihtuvat. 
 
 
