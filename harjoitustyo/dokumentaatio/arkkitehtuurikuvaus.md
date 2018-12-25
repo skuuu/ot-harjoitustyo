@@ -62,16 +62,21 @@ Päätoiminnallisuudet kuvattu seuraavaksi sekvenssikaavioina.
 Käyttäjä voi kirjautua aloitusnäkymässä painikkeesta _login_ jonka aktivaatio kutsuu logic-luokan metodia _checkUsername_ ja palauttaa true, jos käyttäjänimi löytyy tietokannasta ja muuten false. 
 
 <img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/loginSeq.png" width="700">
+<br/>
 
 #### Uuden käyttäjän luominen  
 Uuden käyttäjän voi luoda _Create new user account_ -painikkeesta, jolloin käyttöliittymä kutsuu logic-luokan metodia _createUser_ joka kutsuu UserAccountDao-luokan metodia _saveOrUpdate_ ja palauttaa true, jos tallennus onnistui ja muuten false. False-tapauksissa käyttäjälle näytetään virheviesti. 
 
-<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/createuseraccountSeq.png" width="700">
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/newUserSeq.png" width="700">
+<br/>
 
 #### Activityn luominen  
 Activity (kulu) luodaan valitsemalla päivä, kategoria, lisätiedot, summa ja aktivoimalla painike _add_, jolloin kutsutaan Logic-luokan metodia addExpense. Tästä metodista Activity lisätään tietokantaan ActivityDao-luokan save-metodia käyttäen. 
 
-<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/newActivitySeq.png" width="700">
+<img src="https://github.com/skuuu/ot-harjoitustyo/blob/master/harjoitustyo/Images/newActivitySeq.png" width="700">  
+
+(Sekvenssikaavion selkeyden vuoksi moniparametrilliseen metodiin addExpense() ei ole merkitty käyttäjän syöttämiä parametreja.)  
+<br/>
 
 #### Muut toiminnallisuudet  
 Sovelluksen toimintaperiaate on samankaltainen myös muille toiminnoille. Graafinen käyttöliittymä kutsuu logic-luokkaa, josta tarvittaessa kutsutaan edelleen Analysis-luokkaa tai Converter-luokkaa. Logic-luokalla on pääsy UserAccountDao- ja ActivityDao -luokkiin rajapintojen UserAccountDaoInterface ja ActivityDaoInterface kautta. 
