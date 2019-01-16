@@ -67,6 +67,7 @@ public class UserInterface extends Application {
     private VBox activityNodes;
     private ScrollPane scrollPaneLayout;
     private Stage expenseStage;
+    private HashMap <String, String> barColours;
     
     /**
      * Method initializes class 
@@ -87,14 +88,15 @@ public class UserInterface extends Application {
         this.categoryChoice = new ComboBox();
         this.logic = new Logic(userAccountDao, activityDao, fromDate, untilDate);    
         this.bc = null;
+        this.barColours = new HashMap<>();
         this.styles = new ArrayList<>();
-            styles.add("-fx-bar-fill: #F9556D");
-            styles.add("-fx-bar-fill: #A73FFB");
-            styles.add("-fx-bar-fill: #4671CE");
-            styles.add("-fx-bar-fill: #46BDCE");
-            styles.add("-fx-bar-fill: #55F9A5");
-            styles.add("-fx-bar-fill: #FBD33F");
-            styles.add("-fx-bar-fill: #FB693F");
+            styles.add("-fx-bar-fill: #81D3DF");
+            styles.add("-fx-bar-fill: #8F7FDF");
+            styles.add("-fx-bar-fill: #CB1F52");
+            styles.add("-fx-bar-fill: #E8524F");
+            styles.add("-fx-bar-fill: #6C233B"); 
+            styles.add("-fx-bar-fill: #065C65");
+            styles.add("-fx-bar-fill: #F58995");
     }
     
     /**
@@ -124,7 +126,7 @@ public class UserInterface extends Application {
         textFields.put("newUsernameField", new TextField());
         buttons.put("signInButton", new Button("Confirm"));
         buttons.put("backToLoginButton", new Button ("Back"));
-        labels.put("errorMessage", new Label (" "));
+        labels.put("errorMessage", new Label (" ")); //error message needs to be 
         newUserScene = createNewUserScene();
         
         //startScene:
@@ -171,10 +173,9 @@ public class UserInterface extends Application {
 
         primaryStage.setTitle("Säästöpossu");
         primaryStage.setScene(passwordScene);
-        primaryStage.show();
-        
-             
+        primaryStage.show();             
     }
+    
     /**
      * Method updates startScene and is called every time the user access the database
      * 
@@ -200,8 +201,8 @@ public class UserInterface extends Application {
         labels.get("inputErrorMessage").setText("");
         labels.get("inputErrorMessage").setMinHeight(50);
         labels.get("passwordErrorLabel").setText("");
-    
     }
+    
     /**
      * Method creates Tooltips for BarChart by adding mouse listener to bar chart bars. 
      * When mouse hovers over a bar, the YAxis-value (amount in euros) is visible on tooltip. 
@@ -280,16 +281,19 @@ public class UserInterface extends Application {
         Label label  = new Label(activity.toString());
         Label label2 = new Label(activity.getDescription());
         label.setMinWidth(50);
-        Button button = new Button("Delete");
-        button.setAlignment(Pos.CENTER);
-        button.setOnAction(e-> {
+        Button deleteActvityButton = new Button("Delete");
+        deleteActvityButton.setAlignment(Pos.CENTER);
+        deleteActvityButton.setOnAction(e-> {
+            this.barColours.remove(activity.getCategory());
             logic.deleteActivity(activity);
             refreshScreen();
+            this.setBarColours();
+            this.setLegendColours();
             expenseStage.hide();
             expenseStage.close();
         });
         box.setPadding(new Insets(5,5,5,5));
-        box.getChildren().addAll(button, label, label2);
+        box.getChildren().addAll(deleteActvityButton, label, label2);
         return box;
     }
     
@@ -538,6 +542,7 @@ public class UserInterface extends Application {
 
         buttons.get("logoutButton").setOnAction((event) -> {
             passwordField.clear();
+            this.barColours.clear();
             primaryStage.setScene(passwordScene);
         });
 
@@ -591,32 +596,42 @@ public class UserInterface extends Application {
     
     /**
      * Method sets BarChart's bar colours to match colours defined in the styles-list
+     * One colour represents one category during one program-run.
      */
     private void setBarColours() {
-        int i = 0;
         for (XYChart.Series<String, Number> serie: bc.getData()) {
             for (XYChart.Data<String, Number> item: serie.getData()) {
-                item.getNode().setStyle(styles.get(i));
+                if (barColours.containsKey(serie.getName())) {
+                    item.getNode().setStyle(barColours.get(serie.getName()));
+                } else {
+                    for (String colour: styles) {
+                        if (!barColours.values().contains(colour)) {
+                            barColours.put(serie.getName(), colour);
+                            item.getNode().setStyle(colour);
+                        }
+                    }
+                }
             }
-            i++;
         }
     }
     
     /**
      * Method sets BarChart's legend colours to match colours defined in the styles-list
+     * One colour represents one category during one program-run.
      */
     private void setLegendColours() {
         int i = 0;
-        for (Node n : bc.getChildrenUnmodifiable()) {
-            if (n instanceof Legend) {
-                for(Legend.LegendItem legendItem : ((Legend)n).getItems()) {
-                    legendItem.getSymbol().setStyle(styles.get(i));
+        for (Node node : bc.getChildrenUnmodifiable()) {
+            if (node instanceof Legend) {
+                for (Legend.LegendItem legendItem : ((Legend)node).getItems()) {
+                    XYChart.Series<String, Number> serie = bc.getData().get(i);
+                    legendItem.getSymbol().setStyle(barColours.get(serie.getName()));
                     i++;
                 }
             }
         }
     }
-
+        
     /**
      * Method checks if value of the Object is null
      * @return true if not, else false 
